@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>CSS Bug</title>
+	<meta name="generator" content="BBEdit 11.6" />
+	<style>
+body {
+	margin: auto;
+	max-width: 40em;
+	padding: 1.2em 4% 1.5em 4%;
+	font-size: 20px;
+}
+h1 {
+	font-size: 28px;
+}
+h2 {
+	font-size: 22px;
+}
+p {
+	margin: 0.4em 0;
+}
+ul {
+	margin: 0 0 1.5em 0;
+}
+table {
+	border-collapse: collapse;
+	font-size: 18px;
+	margin: 1.5em 0 2em 1em;
+}
+th, td {
+	border: 1px solid #bbb;
+	padding: 0.2em 0.6em;
+	text-align: center;
+}
+th {
+	text-align: left;
+	font-weight: normal;
+	background-color: #eee;
+}
+td.bold {
+	font-weight: bold;
+}
+td.top {
+	border-top: 3px solid #8c8;
+}
+td.bot {
+	border-bottom: 3px solid #f88;
+}
+tr.b td {
+	border: none;
+}
+tr.b td.bold {
+	border: 1px solid #bbb;
+}
+.date {
+	font-size: 13px;
+	margin-right: 2em;
+}
+	</style>
+</head>
+<body>
+<h1>CSS Bug in Chrome, Safari, Vivaldi</h1>
+<p>The bug has been found in these browsers:</p>
+<ul>
+	<li>Chrome, v. 54.0.2840.98, macOS</li>
+	<li>Chrome, v. 54.0.2840.99, Windows</li>
+	<li>Safari, v. 10.0.1, macOS</li>
+	<li>Safari Technology Preview, rel. 17, 10.1, macOS</li>
+	<li>Vivaldi, v. 1.4.589.38, macOS</li>
+</ul>
+<p>The bug does not appear in these browsers:</p>
+<ul>
+	<li>Firefox, v. 49.0.2, macOS</li>
+	<li>Internet Explorer, v. 11.0.9600.18524, Windows</li>
+</ul>
+<h2>Description of the bug:</h2>
+<p>The table cells containing 4 and 5 get rendered with a heavy (3px red) border-bottom, but the CSS
+specifies just plain "1px solid #bbb".</p>
+<p>If the "bot" class is removed from the cell containing 3, then the problem goes away.</p>
+<p>The border-top of the cells containing 4 and 5 seems not to be affected by the bug.</p>
+<table>
+	<tr>
+		<th>A</th>
+		<td>1</td><td class="top bot">2</td><td id="a3" class="bold top bot">3</td><td>4?</td><td>5?</td>
+		<td class="top bot">6</td><td>7</td><td class="bold top bot">8</td><td class="top bot">9</td><td>10</td>
+	</tr>
+	<tr class="b">
+		<th>B</th>
+		<td></td><td class="bold">2</td><td colspan="3"></td><td class="bold">6</td>
+		<td></td><td></td><td class="bold">9</td><td></td>
+	</tr>
+</table>
+<hr />
+<p>This bug has been reported to
+<a href="https://bugs.webkit.org/show_bug.cgi?id=164816">WebKit Bugzilla</a>.</p>
+<hr />
+<p>
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+    <img style="border:0;width:88px;height:31px"
+        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+        alt="Valid CSS!" />
+</a>
+</p>
+<p>
+<span class="date">First version: 15-Nov-2016</span>
+<span class="date">Updated: 12-Dec-2018</span>
+</p>
+<script>
+function setClassesForA3(classes) {
+	var a3 = document.getElementById("a3");
+	a3.className = classes;
+}
+</script>
+</body>
+</html>

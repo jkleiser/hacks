@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Word Loop-ups</title>
+  <meta name="generator" content="BBEdit 11.6" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<style type="text/css">
+html {
+  background-color: #eee;
+}
+body {
+  margin: auto;
+  border: 1px solid #ddd;
+  background-color: white;
+  max-width: 48em;
+  padding: 2em 4em 8em 5em;
+}
+p {
+  color: #333;
+  font-size: 16pt;
+  line-height: 140%;
+}
+p.touch { /* reserved for touch devices */
+  display: none;
+}
+body.touch p.touch {
+  display: block;
+}
+wi {
+  position: relative;
+  margin: 0 -2px;
+  border: 1px solid white;
+  padding: 1px;
+}
+body:hover wi, body.touch wi {
+  color: green;
+}
+wi.info {
+  cursor: help;
+  background-color: white;
+}
+body:hover wi.info, body.touch wi.info {
+  color: blue;
+}
+wi.info.open {
+  border: 1px solid gray;
+  background-color: #ffc;
+  cursor: pointer;
+}
+wi div.info {
+  position: absolute;
+  left: -0.8em;
+  top: 1.3em;
+  border: 1px solid gray;
+  border-radius: 3px;
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+  background-color: #ffc;
+  color: #333;
+  font-size: 14pt;
+  line-height: 125%;
+  min-width: 8em;
+  max-width: 18em;
+  padding: 0.4em 0.6em 0.4em 0.8em;
+  z-index: 20;
+}
+@media only screen and (max-device-width : 1024px)  {
+  body {
+    padding: 0 0.5em 4em 1em;
+  }
+}
+	</style>
+  <script type="text/javascript">
+
+var endEvtName = ("ontouchend" in document.documentElement) ? "touchend" : "click";
+var startX, startY;
+var iDivZInit = 20, iDivZNext = iDivZInit;
+
+function taggedElements(tag) {
+  return document.querySelectorAll(tag);
+}
+
+function hideAllInfo() {
+  var wordTag = "wi";
+  var iWords = document.querySelectorAll(wordTag + ".info.open");
+  for (var i=0; i<iWords.length; i++) {
+    iWords[i].className = "info";
+    iWords[i].querySelector("div.info").style.visibility = "hidden";
+  }
+  iDivZNext = iDivZInit;
+}
+
+function hideInfo(evt) {
+  evt.stopPropagation();
+  evt.target.style.visibility = "hidden";
+  evt.target.parentElement.className = "info";
+}
+
+function toggleInfoVisibility(evt) {
+  evt.stopPropagation();
+  var wTarget = evt.target;
+  var iStyle = wTarget.querySelector("div.info").style;
+  if (iStyle.visibility == "hidden") {
+    wTarget.className = "info open";
+    iStyle.zIndex = iDivZNext++;
+    iStyle.visibility = "visible";
+  } else {
+    wTarget.className = "info";
+    iStyle.visibility = "hidden";
+  }
+}
+
+function attachInfoToElement(elem, info) {
+  var div = document.createElement("div");
+  div.appendChild(document.createTextNode(info));
+  div.className = "info";
+  div.addEventListener(endEvtName, hideInfo);
+  div.style.visibility = "hidden";
+  elem.appendChild(div);
+  elem.addEventListener(endEvtName, toggleInfoVisibility);
+  elem.className = "info";
+}
+
+var infoDict = {
+  "Canada": "a country in the northern half of North America",
+  "England": "a country that is part of the United Kingdom",
+  "Myanmar": "officially the Republic of the Union of Myanmar and also known as Burma, is a sovereign state in South East Asia bordered by Bangladesh, India, China, Laos and Thailand",
+  "Quebec City": "the capital city of the Canadian province of Quebec",
+  "Rohingya people": "Muslim Indo-Aryan peoples from the Rakhine State, Myanmar",
+  "United Nations": "an intergovernmental organization to promote international co-operation",
+  "United States": "a federal republic composed of 50 states, a federal district, five major self-governing territories, and various possessions",
+  "Wales": "a country that is part of the United Kingdom and the island of Great Britain",
+  "Western Sahara": "a disputed territory in the Maghreb region of North Africa, bordered by Morocco to the north, Algeria to the northeast, Mauritania to the east and south, and the Atlantic Ocean to the west",
+  
+  "mosque": "a place of worship for followers of Islam",
+  "retroactively": "with effect from a date in he past",
+  "tablet computer": "a thin, flat mobile computer with a touchscreen display, which is usually in color, processing circuitry, and a rechargeable battery in a single device",
+  
+  "Alan Turing law": "an informal term for the law in the United Kingdom, contained in the Policing and Crime Act 2017, which serves as an amnesty law to retroactively pardon men who were cautioned or convicted under historical legislation that outlawed homosexual acts"
+};
+
+function bodyTouchStart(evt) {
+  startX = evt.touches[0].pageX;  // clientX ?
+  startY = evt.touches[0].pageY;  // clientY ?
+}
+
+// https://developer.apple.com/library/content/documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html
+function bodyTouchEnd(evt) {
+  try {
+    var tavail = "?";
+    if (evt.targetTouches) {
+      tavail = evt.targetTouches;
+      /*if (evt.touches[0].clientX) {
+        tavail = "clientX";
+      }*/
+      if (evt.touches.item) {
+        tavail = evt.touches.item(0);
+      }
+      /*if (evt.touches[0].pageX) {
+        tavail = "pageX";
+      }*/
+    } else {
+      tavail = "no support";
+    }
+    debugLog("touches: " + tavail);
+/*
+    if (Math.abs(evt.touches[0].pageX - startX) < 5 &&
+        Math.abs(evt.touches[0].pageY - startY) < 5) {
+      hideAllInfo();
+    }*/
+  } catch (e) {
+    hideAllInfo();
+    debugLog("* " + e);
+  }
+}
+
+function prepareBody() {
+  var bodyElem = document.querySelector("body");
+  if (endEvtName === "touchend") {
+    bodyElem.className = "touch";
+    bodyElem.addEventListener("touchstart", bodyTouchStart);
+    bodyElem.addEventListener("touchend", bodyTouchEnd);
+  } else {
+    bodyElem.addEventListener("click", hideAllInfo);
+  }
+}
+
+function attachInfoToWords() {
+  try {
+    var nodes = taggedElements("wi");
+    for (var i=0, node; node=nodes[i]; i++) {
+      var info = infoDict[node.innerText];
+      if (info) attachInfoToElement(node, info);
+    }
+    console.log("attachInfoToWords: a total of %s wi elements", nodes.length);
+  } catch (e) {
+    alert("attachInfoToWords: " + e);
+  }
+}
+
+function init() {
+  debugLog("init #0");
+  prepareBody();
+  debugLog("init #1");
+  attachInfoToWords();
+  debugLog("init #2, " + endEvtName);
+}
+
+function debugLog(text) {
+	document.getElementById("debug").value = text;
+}
+  </script>
+</head>
+<body onload="init();">
+<p>03.01.11</p>
+<p><input type="text" id="debug" style="font-size: 60%; border: 1px solid gray; width: 90%" readonly /></p>
+<p class="touch">It seems you are using a “touch device”, like a <wi>tablet computer</wi>. That should cause no problems here.</p>
+<p>The <wi>United Nations</wi> releases a report stating that the <wi>Myanmar</wi> Army has committed serious human rights violations against the <wi>Rohingya people</wi>, including mass killings, systemic sexual violence, and the killing of children.</p>
+<p>More than 49,000 men in <wi>England</wi> and <wi>Wales</wi> are <wi>retroactively</wi> pardoned under the <wi>Alan Turing law</wi>, after being cautioned or convicted under historical legislation that outlawed homosexual acts.</p>
+<p><wi>Morocco</wi> is readmitted to the <wi>African Union</wi> despite an ongoing dispute over <wi>Western Sahara</wi>.</p>
+<p>The <wi>Winter X Games</wi> conclude with the <wi>United States</wi> winning seven gold medals.</p>
+<p>A gunman kills six people and injures eight others in a mass shooting at a <wi>mosque</wi> in <wi>Quebec City</wi>, <wi>Canada</wi>.</p>
+</body>
+</html>

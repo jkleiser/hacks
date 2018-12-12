@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta charset="utf-8" />
+	<link rel="shortcut icon" href="http://folk.uio.no/jkleiser/frog.ico" type="image/x-icon">
+	<title>The Meter</title>
+	<script src="https://fb.me/react-with-addons-0.14.4.min.js"></script>
+	<script src="https://fb.me/react-dom-0.14.4.min.js"></script>
+	<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+	<style type="text/css">
+body {
+	margin: 6px;
+}
+div.felt {
+	position: relative;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 2px;
+	border-color: #ccc #aaa #aaa #ccc;
+	background-color: #dd7;
+	padding: 6px 10px 22px 8px;
+	overflow: auto;
+}
+div.help {
+	position: absolute;
+	left: 24%;
+	top: 4px;
+	width: 72%;
+	max-width: 34em;
+	/*padding: 4px 0 0 0;*/
+	padding: 4px 4px 4px 12px;
+	font: 16px "Georgia", serif;
+	/*line-height: 130%;*/
+	z-index: 3;
+}
+div.help p {
+	margin: 6px 4px;
+}
+.touch div.felt, .touch div.help {
+	cursor: pointer;	/* workaround for click detection iOS */
+}
+ul.game {
+	position: relative;
+	padding: 0;
+	list-style-type: none;
+	font-size: 50%;
+	cursor: pointer;
+}
+ul.game li {
+	float: left;
+	padding: 1px;
+	margin-bottom: 8px;
+}
+.black {
+	color: #000;
+}
+.red {
+	color: #e00;
+}
+.card, .deck, .menuBtn {
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 5px;
+	padding: 0px 2px 8px 2px;
+	text-align: center;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+.deck {
+	margin: 0 0 0 10px;
+	border-color: #999 #666 #666 #999;
+	width: 2.5em;
+	height: 3.75em;
+	background-color: #c89;
+	color: white;
+	font-size: 220%;
+}
+.card {
+	border-color: #bbb #999 #999 #bbb;
+	background-color: white;
+	width: 40px; /* width: 4.5em */
+}
+.sel {
+	position: relative;
+	top: -8px;
+}
+.rank {
+	font-family: "Arial Narrow", sans-serif;
+	font-size: 400%;
+}
+.suit {
+	line-height: 0.4em;
+	font-family: "Arial", "Courier";
+	font-size: 410%;
+}
+.menuBtn {
+	display: inline-block;
+	position: relative;
+	top: 14px;
+	margin: 0 0 36px 10px;
+	border-color: #bbb #999 #999 #bbb;
+	background-color: #ee8;
+	color: #660;
+	padding: 0px 2px 4px 2px;
+	font-family: "Verdana";
+	font-size: 360%;
+	vertical-align: middle;
+	line-height: 88%;
+}
+.menu {
+	display: inline-block;
+	position: absolute;
+	top: -29px;
+	padding: 4px 1px 6px 1px;
+	text-align: left;
+	font: 14px "Verdana", sans-serif;
+}
+.menu.right {
+	left: 8px;	/* menu a little to the right, normal */
+}
+.menu.left {
+	left: -88px;	/* menu a little to the left */
+}
+.touch .menu {
+	font-size: 22px;
+}
+.menu p {
+	margin: 0;
+	padding: 2px 16px 2px 0;
+	text-indent: 12px;
+	white-space: nowrap;
+}
+.menu p:hover:not(.disabled) {
+	background-color: #279;	/* #24e */
+	color: #fff;
+}
+.menu p.disabled {
+	color: #887;
+}
+.msg {
+	display: inline-block;
+	position: relative;
+	left: 8px;
+	top: -30px;
+	max-width: 85%;
+	padding:  0.5em  0.5em 0.4em 0.5em;
+	font-family: sans-serif;
+	font-size: 100%;
+	z-index: 1;
+}
+.help, .menu, .msg {
+	border: 2px ridge lightgray;
+	border-radius: 2px;
+	box-shadow: 3px 2px 4px rgba(0,0,0,0.2);
+	background-color: #fdf9ec;
+	color: #332;
+}
+.help:hover, .menu:hover, .msg:hover {
+	cursor: default;
+}
+.hc, .xc {
+	font-family: "Arial Narrow", sans-serif;
+	font-size: 95%;
+}
+.xc {
+	margin-left: 4px;
+	padding: 0 2px;
+}
+.go {
+	border-top: 2px solid #0b0;
+	background-color: white;
+}
+
+@media all and (max-width: 600px) {
+	div.help {
+		left: 4px;
+		width: 91%;	/* fallback */
+		width: calc(100% - 8px);
+	}
+}
+	</style>
+</head>
+<body>
+	<div id="mountNode"></div>
+	<script type="text/jsx">
+var hArgs = location.hash.replace("#", "");
+//console.log("hArgs=%s, %s", hArgs, hArgs.length);
+var touchScreen = ("ontouchstart" in document.documentElement) || (hArgs.indexOf("touch") >= 0);
+document.documentElement.className += (touchScreen ? " touch" : " mouse");
+var Click = "Click",  click = "click", wndw = "window", mOffA = 3, mOffB = 0;
+if (touchScreen) {
+	Click = "Tap"; click = "tap"; wndw = "screen"; mOffA = 4; mOffB = 1;
+}
+
+var suits = ["♠", "♣", "♥", "♦"];
+var symbols = ["none", "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+var decksize = 52, initcards = 2;
+
+function range(a, b) {
+	var r = [];
+	for (var i=a; i <= b; i++) r.push(i);
+	return r;
+}
+
+function randomCardFromDeck(deck) {
+	var ri = Math.floor(Math.random() * deck.length);
+	var vs = deck.splice(ri, 1)[0];
+	var v = (vs % 13) + 1;		// v=1...13
+	var s = Math.floor(vs / 13);
+	return {rank: v, suit: s};
+}
+
+function cardSerial(card) {
+	return card.suit * 13 + card.rank - 1;
+}
+
+function sameValueOrSuit(card1, card2) {
+	return card1.rank === card2.rank || card1.suit === card2.suit;
+}
+
+function findPossibleMove(m) {
+	for (var i=0; i<m.length-1; i++) {
+		if (sameValueOrSuit(m[i], m[i+1])) return [i, i+1];
+		if ((i < m.length-3) && sameValueOrSuit(m[i], m[i+3])) return [i, i+3];
+	}
+	return 0;
+}
+
+function cardsPrRow() {
+	return Math.floor((window.innerWidth - 32) / 48);
+}
+
+var MenuItem = React.createClass({
+	render: function() {
+		var cName = this.props.disabled ? "disabled" : null;
+		return <p onClick={this.props.onClick} className={cName}>{this.props.text}</p>;
+	}
+});
+
+var MeterApp = React.createClass({
+	getInitialState: function() {
+		var d = range(0, decksize - 1), m = [];
+		for (var i=1; i<=initcards; i++) m.push(randomCardFromDeck(d));
+		return {meter: m, selected: m.length-1, deck: d, cpr: cardsPrRow(), moves: [],
+			menuActive: false, helpActive: false,
+			initMsg: Click + " green background to display instructions", msg: null};
+	},
+	feltWidth: function() {
+		return this.state.cpr * 48;
+	},
+	showMoveMessage: function(meter) {
+		this.setState({msg: (meter.length == 1) ? "Bingo! You made it." :
+			findPossibleMove(meter) ? "There's still a possible move." :
+				("That's all: " + meter.length + " piles")});
+	},
+	clickCard: function(i) {
+		//console.log("clickCard: %s", i);
+		var sel = this.state.selected;
+		if (i === sel-1 || i === sel-3) {
+			if (sameValueOrSuit(this.state.meter[i], this.state.meter[sel])) {
+				//console.log("clickCard: sameValueOrSuit. %s", i);
+				var nextMeter = this.state.meter, selCard = nextMeter[sel];
+				var move = {fromPos: sel, toPos: i, oldCard: nextMeter[i]};
+				nextMeter.splice(sel, 1);	// removing selCard
+				nextMeter[i] = selCard;		// replacing target with selCard
+				var nextMoves = this.state.moves.concat([move]);
+				this.setState({meter: nextMeter, moves: nextMoves, selected: null});
+				if (this.state.deck.length == 0) this.showMoveMessage(nextMeter);
+				return;
+			}
+		}
+		this.setState({selected: (i === sel) ? null : i});
+	},
+	clickDeck: function(evt) {
+		var d = this.state.deck, m = this.state.meter;
+		m.push(randomCardFromDeck(d));
+		//console.log("clickDeck: %s", findPossibleMove(m).toString());
+		this.setState({meter: m, selected: m.length-1, deck: d});
+		if (d.length == 0) this.showMoveMessage(m);
+	},
+	toggleMenu: function(evt) {
+		evt.stopPropagation();
+		this.setState({menuActive: ! this.state.menuActive, helpActive: false, initMsg: null});
+	},
+	toggleHelp: function(evt) {
+		console.log("toggleHelp");
+		evt.stopPropagation();
+		this.setState({helpActive: ! this.state.helpActive, menuActive: false, initMsg: null});
+	},
+	undoMove: function(evt) {
+		var nextMeter = this.state.meter, nextMoves = this.state.moves,
+			move = nextMoves.pop(), mvCard = nextMeter[move.toPos];
+		//console.log("undoMove: %s %s, %s %s", move.oldCard.rank, move.oldCard.suit, mvCard.rank, mvCard.suit);
+		nextMeter[move.toPos] = move.oldCard;
+		nextMeter = nextMeter.slice(0, move.fromPos).concat([mvCard]).concat(nextMeter.slice(move.fromPos));
+		this.setState({meter: nextMeter, moves: nextMoves, selected: move.fromPos, msg: null});
+	},
+	newGame: function() {
+		var yes = true;
+		if (this.state.deck.length > 0 || findPossibleMove(this.state.meter)) {
+			yes = window.confirm("Do you really want a new game now?");
+		}
+		if (yes) this.setState(this.getInitialState());
+	},
+	clickFelt: function(evt) {
+		var t = evt.target;
+		//console.log("clickFelt: %s %s", t.nodeName, t.className);
+		if ((t.className == "felt" || t.nodeName == "LI") && ! this.state.menuActive) {
+			this.toggleHelp(evt);
+		} else {
+			this.setState({initMsg: null, menuActive: false});
+		}
+	},
+	handleWinResize: function(evt) {
+		this.setState({cpr: cardsPrRow() /*, msg: "" + window.innerWidth + " × " + window.innerHeight */});
+	},
+	componentDidMount: function() {
+		//console.log("MeterApp.componentDidMount");
+		window.addEventListener("resize", this.handleWinResize);
+	},
+	componentWillUnmount: function() {
+		//console.log("MeterApp.componentWillUnmount");
+		window.removeEventListener("resize", this.handleWinResize);
+	},
+	render: function() {
+		//console.log("render: %s", this.state.cpr);
+		var leftRightFloat = function(ci, cpr) {
+			return (Math.floor(ci / cpr) % 2 == 0) ? "left" : "right";
+		}
+		
+		var menuClass = function(st) {
+			var float = leftRightFloat(st.meter.length, st.cpr), rem = st.meter.length % st.cpr;
+			var normal = (float == "left") ? (st.cpr - rem > mOffA) : (rem > mOffB);
+			//console.log("menuLeft: %s %s %s", float, rem, normal);
+			return normal ? "menu right" : "menu left";
+		}
+		
+		var renderCard = function(card, i) {
+			//console.log("renderCard: %s, %s", i, leftRightFloat(i, this.state.cpr));
+			var cardClasses = "card";
+			if (card.suit <= 1) cardClasses += " black";
+			if (card.suit >= 2) cardClasses += " red";
+			if (i === this.state.selected) cardClasses += " sel";
+			return (
+				<li key={cardSerial(card)} style={{float: leftRightFloat(i, this.state.cpr)}}>
+					<div className={cardClasses} onClick={this.clickCard.bind(this, i)}>
+						<span className="rank">{symbols[card.rank]}</span><br/>
+						<span className="suit">{suits[card.suit]}</span>
+					</div>
+				</li>
+			);
+		}
+		
+		var endFloat = {float: leftRightFloat(this.state.meter.length+1, this.state.cpr)};
+		var message = this.state.initMsg || this.state.msg;
+		
+		return (
+			<div>
+				<div className="felt" style={{width: this.feltWidth()}} onClick={this.clickFelt}>
+					<ul className="game">
+						{this.state.meter.map(renderCard, this)}
+						{this.state.deck.length ?
+						<li style={endFloat}>
+							<button className="deck" onClick={this.clickDeck}>{this.state.deck.length}</button>
+						</li> : null}
+						<li style={endFloat}>
+							<div className="menuBtn" onClick={this.toggleMenu}>≡{this.state.menuActive ?
+								<div className={menuClass(this.state)}>
+									<MenuItem text="How to play" onClick={this.toggleHelp} />
+									<MenuItem text="Undo move" onClick={this.undoMove}
+										disabled={this.state.moves.length == 0} />
+									<MenuItem text="New game" onClick={this.newGame} />
+								</div> : null
+							}</div>
+						</li>
+					</ul>
+				</div>
+				{message ? <span className="msg">{message}</span> : null}
+				{this.state.helpActive ?
+					<div className="help" onClick={this.toggleHelp}>
+<p>In this solitaire, called “The Meter”, you shall try to end up with all the cards in one pile.</p>
+<p>When you put a card on top of another card or pile, only the top card is visible, the cards
+underneath are therefore ignored for the rest of the game.</p>
+<p>You may put a card on top of another if (1) the cards have the same rank or suit, and (2) there
+are <strong>no cards</strong> or just <strong>two cards</strong> between.
+You may only put a card onto one that's closer to the start.</p>
+<p>An example showing where the <span className="red hc">7♥</span> (rank=7, suit=<span className="red hc">♥</span>) may go:</p>
+<p><span className="red xc go">K♥</span><span className="red xc">2♥</span><span className="black xc go">7♣</span><span className="red xc">7♥</span></p>
+<p>When a card is raised slightly above the others, it means that it is ready to be put onto some
+other card. You may then {click} on the destination card. If the destination was not valid, however, 
+that one will be raised instead. If you {click} on a raised card, it will be “un-raised”.</p>
+<p>The purple pile of cards at the end is where you draw new cards, and the number on that pile shows
+how many cards remain.</p>
+<p>The row of cards may get very long, and when it reaches the other side of the {wndw},
+it will continue on a new line, but now in the opposite direction!</p>
+<p>{Click} to close this.</p>
+					</div> : null
+				}
+			</div>
+		);
+	}
+});
+
+var mApp = React.render(<MeterApp />, document.getElementById("mountNode"));
+	</script>
+</body>
+</html>

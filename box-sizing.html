@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>box-sizing: initial</title>
+	<meta name="generator" content="BBEdit 11.5" />
+	<style type="text/css">
+body {
+   margin: auto;
+   max-width: 40em;
+}
+h1 {
+	font-family: monospace;
+	color: #555;
+}
+div {
+	margin: 12px;
+	width: 330px;
+	border: 5px solid #008;
+	padding: 18px;
+	font: 16px monospace;
+	line-height: 140%;
+}
+.serif {
+	font: 18px serif;
+}
+.contentBox {
+	box-sizing: content-box;
+}
+.borderBox {
+	box-sizing: border-box;
+}
+	</style>
+</head>
+<body>
+	<h1>box-sizing: initial</h1>
+	<p class="serif">
+This is a demonstration of some variants and combinations of the <em>box-sizing</em> property.
+The interesting point here is that there are browsers that seem to ignore the <em>box-sizing:&nbsp;initial</em>
+variant. In the pink case below, this causes the div to be of the same width as the <em>border-box</em>
+case above it. Internet Explorer 11 is one browser where this happens.
+	</p>
+	<div>No box-sizing, just default</div>
+	<div class="contentBox">box-sizing: content-box;</div>
+	<div class="borderBox">box-sizing: border-box;</div>
+	<div class="borderBox" style="box-sizing: initial; background-color: #ffe3e3;">
+box-sizing: border-box;<br />
+<span class="serif">but with its own</span><br />style="box-sizing: initial"
+	</div>
+	<div class="borderBox" style="box-sizing: content-box;">
+box-sizing: border-box;<br />
+<span class="serif">but with its own</span><br />style="box-sizing: content-box"
+	</div>
+	<hr />
+	<p><a href="http://www.w3schools.com/cssref/css3_pr_box-sizing.asp">w3schools.com: CSS3 box-sizing Property</a></p>
+	<p><a href="https://msdn.microsoft.com/en-us/library/dd183522(v=vs.85).aspx">MSDN: box-sizing property</a></p>
+</body>
+</html>

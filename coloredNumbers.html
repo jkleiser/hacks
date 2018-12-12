@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Colored Numbers</title>
+	<meta name="generator" content="BBEdit 9.6" />
+	<style type="text/css" title="text/css">
+canvas {
+	border: 1px solid gray;
+	background-color: #f6f6f6;
+}
+div.digits {
+	border: 1px solid gray;
+	background-color: #f6f6f6;
+	width: 260px;
+	height: 430px;
+	padding: 4px 0 0 20px;
+	font: bold 96px "Comic Sans MS", Times, serif;
+	-webkit-text-stroke: 1px #333;
+	text-shadow: 2px 3px 2px #666;
+	letter-spacing: 0.22em;
+	line-height: 107%;
+}
+.d0 { color: #999; }
+.d1 { color: #fff; }
+.d2 { color: #e22; }
+.d3 { color: #963; }
+.d4 { color: #ff0; }
+.d5 { color: #f0f; }
+.d6 { color: #369; }
+.d7 { color: #f60; }
+.d8 { color: #090; }
+.d9 { color: #06f; }
+.mu { color: #c99; }
+.eq { color: #9c9; }
+	</style>
+	<script type="text/javascript" language="javascript">
+
+//            0       1       2       3       4       5       6       7       8       9
+var fills = ["#999", "#fff", "#e22", "#963", "#ff0", "#f0f", "#369", "#f60", "#090", "#06f"];
+var xPos = [20, 20, 100, 180, 20, 100, 180, 20, 100, 180];
+var yPos = [400, 100, 100, 100, 200, 200, 200, 300, 300, 300];
+
+function setShaddow(ctx, offsetX, offsetY, blur) {
+	ctx.shadowOffsetX = offsetX;
+	ctx.shadowOffsetY = offsetY;
+	ctx.shadowBlur = blur;
+}
+
+function drawColoredText(ctx, text, fillStyle, xPos, yPos) {
+	ctx.fillStyle = fillStyle;
+	setShaddow(ctx, 2, 3, 2);
+	ctx.fillText(text, xPos, yPos);
+	setShaddow(ctx, 0, 0, 0);
+	ctx.strokeText(text, xPos, yPos);
+}
+
+function drawNumbers() {
+	var cv = document.getElementById("canvas");
+	if (cv && cv.getContext) {
+		var ctx = cv.getContext("2d");
+		ctx.font = "bold 96px \"Comic Sans MS\", Times, serif";
+		ctx.strokeStyle = "#333";
+		ctx.lineWidth = 1;
+		ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+		for (var n=0; n<10; n++) {
+			drawColoredText(ctx, n, fills[n], xPos[n], yPos[n]);
+		}
+		drawColoredText(ctx, "×", "#c99", 100, 400);
+		drawColoredText(ctx, "=", "#9c9", 180, 400);
+	}
+}
+
+	</script>
+</head>
+<body onload="drawNumbers();">
+	<p>Using canvas:</p>
+	<canvas id="canvas" width="280" height="430"></canvas>
+	<p>Using CSS:</p>
+	<div class="digits">
+		<span class="d1">1</span><span class="d2">2</span><span class="d3">3</span><br />
+		<span class="d4">4</span><span class="d5">5</span><span class="d6">6</span><br />
+		<span class="d7">7</span><span class="d8">8</span><span class="d9">9</span><br />
+		<span class="d0">0</span><span class="mu">×</span><span class="eq">=</span>
+	</div>
+</body>
+</html>

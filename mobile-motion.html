@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=480px" />
+	<title>Mobile Motion</title>
+	<meta name="generator" content="BBEdit 9.6" />
+	<style type="text/css">
+h2 {
+	margin: 0;
+	font-size: 18px;
+	color: #333;
+}
+table {
+	border-collapse: collapse;
+	background-color: #fff;
+	margin-bottom: 10px;
+}
+td#accX, td#oriA {
+	width: 190px;
+}
+td#oriGraph {
+	width: 160px;
+}
+td#oriGraph div {
+	position: relative;
+	font-size: 60px;
+	text-indent: 0.9em;
+}
+ol {
+	padding-left: 20px;
+}
+	</style>
+	<script type="text/javascript" language="javascript">
+var displayInterval = 500;		// 500 ms
+var nextMotionDisplay = 0, nextOrientationDisplay = 0;
+var arrow, arrowRelAlfa = -90;
+
+function init() {
+	arrow = document.querySelector("td#oriGraph div");
+	window.addEventListener("devicemotion",
+		function(evt) {
+			var now = evt.timeStamp;
+			if (now >= nextMotionDisplay) {
+				if (evt.acceleration) {
+					accX.firstChild.nodeValue = evt.acceleration.x;
+					accY.firstChild.nodeValue = evt.acceleration.y;
+					accZ.firstChild.nodeValue = evt.acceleration.z;
+				}
+				if (evt.accelerationIncludingGravity) {
+					aigX.firstChild.nodeValue = evt.accelerationIncludingGravity.x;
+					aigY.firstChild.nodeValue = evt.accelerationIncludingGravity.y;
+					aigZ.firstChild.nodeValue = evt.accelerationIncludingGravity.z;
+				}
+				if (evt.rotationRate) {
+					rrA.firstChild.nodeValue = evt.rotationRate.alpha;
+					rrB.firstChild.nodeValue = evt.rotationRate.beta;
+					rrG.firstChild.nodeValue = evt.rotationRate.gamma;
+				}
+				minterval.firstChild.nodeValue = evt.interval;
+				nextMotionDisplay = now + displayInterval;
+			}
+		},
+		false);
+	
+	window.addEventListener("deviceorientation",
+		function(evt) {
+			var now = evt.timeStamp;
+			if (now >= nextOrientationDisplay) {
+				oriA.firstChild.nodeValue = evt.alpha;
+				oriB.firstChild.nodeValue = evt.beta;
+				oriG.firstChild.nodeValue = evt.gamma;
+				arrow.style.webkitTransform = "rotate(" + (arrowRelAlfa + evt.alpha) + "deg)";
+				nextOrientationDisplay = now + displayInterval;
+			}
+		},
+		false);
+}
+	</script>
+</head>
+<body onload="init();">
+	<h2>DeviceMotionEvent</h2>
+	<table border="1" cellspacing="0" cellpadding="4">
+		<tr>
+			<td rowspan="3">acceleration</td><td>x</td><td id="accX">?</td>
+		</tr>
+		<tr><td>y</td><td id="accY">?</td></tr>
+		<tr><td>z</td><td id="accZ">?</td></tr>
+		
+		<tr>
+			<td rowspan="3">accelerationIncludingGravity</td><td>x</td><td id="aigX">?</td>
+		</tr>
+		<tr><td>y</td><td id="aigY">?</td></tr>
+		<tr><td>z</td><td id="aigZ">?</td></tr>
+		
+		<tr>
+			<td rowspan="3">rotationRate</td><td>alpha</td><td id="rrA">?</td>
+		</tr>
+		<tr><td>beta</td><td id="rrB">?</td></tr>
+		<tr><td>gamma</td><td id="rrG">?</td></tr>
+		
+		<tr><td colspan="2">interval</td><td id="minterval">?</td></tr>
+	</table>
+	<h2>DeviceOrientationEvent</h2>
+	<table border="1" cellspacing="0" cellpadding="4">
+		<tr><td>alpha</td><td id="oriA">?</td><td id="oriGraph" rowspan="3"><div>➵</div></td></tr>
+		<tr><td>beta</td><td id="oriB">?</td></tr>
+		<tr><td>gamma</td><td id="oriG">?</td></tr>
+	</table>
+	<hr style="margin: 20px"/>
+	<p>According to Apple's ref. (#2 below):<br/>
+	The angles of rotation do not represent the real world orientation.
+	They are defined as offset from an arbitrary direction.</p>
+	<ol>
+		<li><a href="https://developer.apple.com/library/safari/#documentation/SafariDOMAdditions/Reference/DeviceMotionEventClassRef/DeviceMotionEvent/DeviceMotionEvent.html">Apple: DeviceMotionEvent Class Reference</a></li>
+		<li><a href="https://developer.apple.com/library/safari/#documentation/SafariDOMAdditions/Reference/DeviceOrientationEventClassRef/DeviceOrientationEvent/DeviceOrientationEvent.html%23//apple_ref/doc/uid/TP40010526">Apple: DeviceOrientationEvent Class Reference</a></li>
+		<li><a href="http://dev.w3.org/geo/api/spec-source-orientation.html">W3C: DeviceOrientation Event Specification</a></li>
+	</ol>
+</body>
+</html>

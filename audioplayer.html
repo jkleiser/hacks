@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta charset="utf-8" />
+  <link rel="shortcut icon" href="./frog.ico" type="image/x-icon">
+  <title>Audio Player 🍁</title>
+  <style>
+body {
+  margin: 8px 4px;
+  background-color: #eed;
+}
+div.audio {
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #bba;
+  width: 296px;
+  resize: horizontal;
+  overflow: hidden;
+  padding: 0 12px 0 0;
+}
+audio {
+  margin: 1px 0 0 0;
+  width: 100%;
+  resize: none;
+  padding: 2px 4px;
+}
+div.custom {
+  margin: 8px 0;
+  border: 1px solid #bba;
+  width: 296px;
+  padding: 6px;
+}
+button {
+  position: relative;
+  font: 20px Arial, sans-serif;
+  width: 54px;
+  height: 40px;
+}
+button.play:before {
+  content: "\25BA";    /* BLACK RIGHT-POINTING POINTER */
+}
+button.pause:before {
+  content: "\2590\2590";  /* RIGHT HALF BLOCK x 2 */
+}
+button.pause {
+  font: 14px Arial, sans-serif;
+  padding: 10px 8px 8px 0px;
+}
+input#timeElem, input#progNameElem, div#infoElem {
+  margin: 6px 0;
+  font: 15px Verdana, Arial, sans-serif;
+  width: 3.5em;
+  padding: 0.3em 0.5em;
+  background-color: #ffe;
+}
+input#progNameElem {
+  width: 18.5em;
+}
+div#infoElem {
+  margin: 8px 0;
+  border: 1px solid #bba;
+  font: 18px Verdana, Arial, sans-serif;
+  width: 296px;
+  height: 213px;
+  padding: 4px 6px;
+  overflow: hidden;
+}
+div#infoElem p {
+  margin: 0 0 1px 0;
+  padding: 0 0 3px 0;
+}
+div#infoElem p:first-child {
+  border-bottom: 1px solid #ccb;
+}
+div#infoElem span {
+  color: #776;
+}
+select#progSel, option, #loadSrcBtn {
+  background-color: white;
+  font-size: 14px;
+}
+
+@media all and (max-width: 600px) {
+  button.pause {
+    top: -2px;
+  }
+  select#progSel {
+    max-width: 234px;
+  }
+}
+
+@media all and (min-width: 600px) {
+  body {
+    margin: 20px;
+  }
+  div.audio {
+    padding: 60px 12px 0 0;
+  }
+  div.custom {
+    width: 430px;
+  }
+}
+  </style>
+  <script type="text/javascript">
+var audioElem, startStopBtn, timeElem, infoElem, progNameElem, progSel, progIdx = 0;
+var amRoutes = "http://americanroutes.s3.amazonaws.com/shows/";
+var bbs = "http://bluesbeforesunrise.org/BBS_Audio/";  // may be wrong, not used
+var jazzInsp = "http://recordings.talkshoe.com/";
+var krvs = "http://cpa.ds.npr.org/krvs/audio/";
+var mio = "http://musicinsideout.wwno.org/audio/";
+var phc = "http://167.88.156.221/phc/";
+var tunein = "http://feed.tunein.com/json/livenowjson.aspx?stationId=";
+var widgets = "http://widgets-proxy.cloudapp.net/webapi/station/";
+var piPodcast = "http://thepipodcast.com/media/";
+var curProg = null;
+var curStationId = null;  // tunein
+var curWStation = null; // widgets
+
+var progArr = [
+  {desc: "≈ KRVS, Louisiana", src: "http://18243.live.streamtheworld.com/KRVSFM.mp3"},
+  {desc: "≈ KBON, Louisiana", src: "http://ice64.securenetsystems.net/KBON"},
+  {desc: "≈ WWNO, Louisiana", src: "http://tektite.streamguys1.com:5140/wwnolive-mp3"},
+  {desc: "≈ American Roots", src: "http://stream.sonixcast.com:9175/stream/",
+    dbid: "AmRoots", stationId: 283449},
+  {desc: "≈ Cajun Music Radio", src: "http://15913.live.streamtheworld.com/SAM07AAC007_SC",
+    dbid: "CajunMR", wStation: 74303},  // http://15913.live.streamtheworld.com/SAM07AAC007_SC
+  {desc: "≈ Radio Louisiana", src: "http://radio3.citrus3.com:8416/;"},  // http://91.121.134.23:8416/stream/1/?cb=219651.mp3
+  {desc: "≈ Retro Roots Radio", src: "http://144.217.253.136:8412/stream"},
+  {desc: "≈ KPFA, California", src: "http://stations.pacifica.org:8000/kpfa_64"},
+  {desc: "≈ Jazz Ascona", src: "http://178.209.40.106:9002/stream"},
+  {desc: "≈ Vallenato Internacional", src: "http://server7.servistreaming.com:10010/stream"},
+  {desc: "≈ NRK Alltid Nyheter", src: "http://lyd.nrk.no:80/nrk_radio_alltid_nyheter_mp3_h"},
+  {desc: "≈ NRK Jazz", src: "http://lyd.nrk.no/nrk_radio_jazz_mp3_m"},
+  {desc: "≈ NRK Klassisk", src: "http://lyd.nrk.no/nrk_radio_klassisk_mp3_m"},
+  {desc: "≈ NRK P1 Østland", src: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_mp3_m"},
+  {desc: "≈ NRK P2", src: "http://lyd.nrk.no:80/nrk_radio_p2_mp3_h"},
+  {desc: "≈ Ordentlig Radio", src: "http://mms-live.online.no/oradio_mp3_m"},
+  {desc: "≈ Radio Vinyl", src: "http://ads-e-bauerse-fm-04-cr.sharp-stream.com/vinyl_no_aac"},
+  {desc: "KRVS Earth Beat 13.09.2015", src: krvs + "2015/09/earth_beat_19-00_0.mp3", startTime: 105},
+  {desc: "KRVS Encore 08.08.2015", src: krvs + "2015/08/Encore_15-00_1.mp3"},
+  {desc: "KRVS Encore 16.08.2015", src: krvs + "2015/08/Encore_15-00_31.mp3"},
+  {desc: "KRVS Encore 22.08.2015", src: krvs + "2015/08/Encore_15-00_0.mp3"},
+  {desc: "KRVS Encore 29.08.2015", src: krvs + "2015/08/Encore_15-00_3.mp3"},
+  {desc: "KRVS Francomix 10.12.2015", src: krvs + "2015/12/Francomix_20-59_0.mp3"},
+  {desc: "KRVS Freetown Radio 11.09.2013", src: krvs + "2013/09/FreetownRadio_15-9-11.mp3"},
+  {desc: "KRVS Freetown Radio 26.09.2014", src: krvs + "2014/09/Freetown_Radio_15-00_4.mp3"},
+  {desc: "KRVS Freetown Radio 14.08.2015", src: krvs + "2015/08/freetown_radio_15-00_0.mp3"},
+  {desc: "KRVS Freetown Radio 21.08.2015", src: krvs + "2015/08/freetown_radio_15-00_1.mp3"},
+  {desc: "Am. Routes: Will the Circle Be", src: amRoutes + "1343_01.mp3"},
+  {desc: "Am. Routes: Jazz Vibes", src: amRoutes + "1343_02.mp3"},
+  {desc: "Am. Routes 1350_01", src: amRoutes + "1350_01.mp3"},
+  {desc: "Am. Routes 1350_02", src: amRoutes + "1350_02.mp3"},
+  {desc: "Am. Routes 1425_01", src: amRoutes + "1425_01.mp3"},
+  {desc: "Am. Routes 1425_02", src: amRoutes + "1425_02.mp3"},
+  {desc: "Am. Routes 1522_01", src: amRoutes + "1522_01.mp3"},
+  {desc: "Am. Routes 1522_02", src: amRoutes + "1522_02.mp3"},
+  {desc: "Am. Routes 1524_01", src: amRoutes + "1524_01.mp3"},
+  {desc: "Am. Routes 1524_02", src: amRoutes + "1524_02.mp3"},
+  {desc: "Am. Routes 1526_01", src: amRoutes + "1526_01.mp3"},
+  {desc: "Am. Routes 1526_02", src: amRoutes + "1526_02.mp3"},
+  {desc: "Am. Routes 1532_3", src: amRoutes + "1532_3.mp3"},
+  {desc: "Am. Routes 1537_01", src: amRoutes + "1537_01.L%201.mp3"},
+  {desc: "Am. Routes 1537_02", src: amRoutes + "1537_02.L%201.mp3"},
+  {desc: "Am. Routes: Alan Lomax 01", src: amRoutes + "1546_01.mp3"},
+  {desc: "Am. Routes: Alan Lomax 02", src: amRoutes + "1546_02.mp3"},
+  {desc: "Am. Routes: Flaco Jimenez", src: amRoutes + "1619_Hr1_01.mp3"},
+  {desc: "Am. Routes: Eddie Palmieri", src: amRoutes + "1619_Hr2_01.mp3"},
+  {desc: "Jazz Insp.: Powell, Riley", src: jazzInsp + "TC-30000/TS-805153.mp3"},
+  {desc: "Jazz Insp.: Dick Hyman", src: jazzInsp + "TC-30000/TS-962527.mp3"},
+  {desc: "Music In-Out: M. White", src: mio + "MIO_MichaelWhite_ShowMix_080615.mp3"},
+  {desc: "Music In-Out: Billington", src: mio + "MIO_ScottBillington_ShowMixMP3_12102015.mp3"},
+  {desc: "Prairie Home: The Revelers", src: phc + "2016/02/20/phc_20160220_128.mp3"},
+  {desc: "Prairie Home: Taj Mahal", src: phc + "2016/02/27/phc_20160227_128.mp3"},
+  {desc: "BBC 4: Losing Louisiana",
+    src: "http://open.live.bbc.co.uk/mediaselector/5/redir/version/2.0/mediaset/audio-nondrm-download/proto/http/vpid/p030t69h.mp3"},
+  {desc: "≈ Bienvenue en Louisiane", src: "http://lin2.san.fast-serv.com:6004/stream",
+    stationId: 185404, song: "http://www.streamlicensing.com/directory/getsong.cgi?sid=1783"},
+  {desc: "≈ KOOP, Texas", src: "http://streaming.koop.org:8508/;stream.nsv"},
+  {desc: "≈ WMPG, Southern Maine", src: "http://quarrel.str3am.com:7270/;stream.mp3"},
+  {desc: "React Podcast #5", src: "https://s3-us-west-2.amazonaws.com/reactpodcast.com/podcasts/podcast-5.mp3"}
+];
+
+function handleError(evt) {
+  console.log("handleError: %s", evt);
+  infoElem.innerHTML = span("Failed to contact program or station");
+}
+
+function init() {
+  audioElem = document.getElementById("audioElem");
+  startStopBtn = document.getElementById("startStopBtn");
+  timeElem = document.getElementById("timeElem");
+  progNameElem = document.getElementById("progNameElem");
+  progSel = document.getElementById("progSel");
+  infoElem = document.getElementById("infoElem");
+  
+  startStopBtn.disabled = true;
+  
+  for (var i=0; i<progArr.length; i++) {
+    var opt = document.createElement("option");
+    opt.value = i;
+    opt.text = progArr[i].desc;
+    progSel.appendChild(opt);
+  }
+  
+  audioElem.addEventListener("error", handleError);
+}
+
+function setSelectedProgIdx() {
+  progIdx = progSel.value;
+  console.log("setSelectedProgIdx: %s", progIdx);
+}
+
+function xc(str) {
+  if (str) {
+    var res = str.replace("�", "&eacute;");
+    if (res !== str) console.log("xc: %s -> %s", str, res);
+    return res;
+  }
+  return "-";
+}
+
+function p(str) {
+  return "<p>" + str + "</p>";
+}
+
+function span(str) {
+  return "<span>" + str + "</span>";
+}
+
+function songInfoAvail() {
+  return curStationId || curWStation;
+}
+
+function loadSource() {
+  try {
+    curProg = progArr[progIdx];
+    audioElem.src = curProg.src;
+    audioElem.type = "audio/mpeg";  // assuming mp3
+    progNameElem.value = curProg.desc;
+    startStopBtn.disabled = false;
+    curStationId = curProg.stationId;
+    curWStation = curProg.wStation;
+    var info = songInfoAvail() ? "song info" : "◆";
+    if (curProg.startTime) {
+      try {
+        audioElem.currentTime = curProg.startTime;  // not all browsers handles this
+      } catch (e) {
+        console.log("loadSource, currentTime: %s", e);
+        info = "Program starts at " + secondsAsMinsSecs(curProg.startTime);
+      }
+    }
+    updateStartStopBtn();
+    updateTimeElem();
+    infoElem.innerHTML = span(info);
+  } catch (e) {
+    console.log("loadSource: %s", e);
+    progNameElem.value = e;
+  }
+}
+
+function startStop() {
+  if (audioElem.paused) {
+    audioElem.play();
+  } else {
+    audioElem.pause();
+  }
+}
+
+function handlePlay() {
+  updateStartStopBtn();
+}
+
+function handlePause() {
+  updateStartStopBtn();
+}
+
+function handleEnded() {
+  updateStartStopBtn();
+}
+
+function secondsAsMinsSecs(secs) {
+  var mins = Math.floor(secs / 60);
+  var secs = Math.floor(secs % 60);
+  var sep = secs < 10 ? ":0" : ":";
+  return "" + mins + sep + secs;
+}
+
+function updateTimeElem() {
+  timeElem.value = secondsAsMinsSecs(audioElem.currentTime);
+}
+
+function updateStartStopBtn() {
+  startStopBtn.className = audioElem.paused ? "play" : "pause";
+}
+
+function adjustInfoElem(fontSize, bkgndColor) {
+  infoElem.style.fontSize = fontSize || "18px";
+  infoElem.style.backgroundColor = bkgndColor || "#ffe";
+}
+
+function getTuneJsonp() {
+  if (songInfoAvail()) {
+    var head = document.querySelector("head");
+    var script = document.querySelector("script#jsonp");
+    if (script) head.removeChild(script);
+    script = document.createElement("script");
+    script.setAttribute("id", "jsonp");
+    script.setAttribute("type", "text/javascript");
+    script.setAttribute("async", "async");
+    if (curWStation) {
+      script.setAttribute("src", widgets + curWStation + "/history/npe?token=3d615b6820d4ca126c2dfd0c89c108139f1dc748&format=json&callback=updateFromMediaItem");
+    } else {
+      script.setAttribute("src", tunein + curStationId + "&callback=updateTune");
+    }
+    head.appendChild(script);  // seems impossible to catch Cross Origin error here
+  } else {
+    infoElem.innerHTML = span("◆");
+  }
+}
+
+function getStoredTunes() {
+  var info = localStorage.getItem("tune_info");
+  return info ? info.split(";") : [];
+}
+
+function addToLocalStorage(artist, title) {
+  if (artist || title) {
+    var newTune = artist + "|" + title;
+    //console.log(newTune);
+    var tuneArr = getStoredTunes();
+    if (newTune !== tuneArr[0]) {
+      tuneArr.unshift(newTune);
+      console.log(tuneArr);
+      if (tuneArr.length > 10) tuneArr.pop();
+      localStorage.setItem("tune_info", tuneArr.join(";"));
+    }
+  }
+}
+
+function updateTune(data) {
+  console.log(data);
+  adjustInfoElem("24px", "white");
+  infoElem.innerHTML = p(xc(data.Artist)) + p(xc(data.Title));
+  addToLocalStorage(data.Artist, data.Title);
+  setTimeout(adjustInfoElem, 5000);
+}
+
+function updateFromMediaItem(data) {
+  updateTune(data.m_Item2);
+}
+
+function listTunes() {
+  var tuneArr = getStoredTunes();
+  var list = "";
+  for (var i=0; i<tuneArr.length; i++) {
+    var tune=tuneArr[i].split("|");
+    list += p(tune[0] + ": " + tune[1]);
+  }
+  adjustInfoElem("14px", "white");
+  infoElem.innerHTML = list;
+}
+  </script>
+</head>
+<body onLoad="init()">
+  <div class="audio">
+    <audio id="audioElem" onPlay="handlePlay()" onPause="handlePause()" onEnded="handleEnded()"
+      onTimeupdate="updateTimeElem()" controls>
+    Your browser does not support the audio element.
+    </audio>
+  </div>
+  <div class="custom">
+    <button id="startStopBtn" class="play" onClick="startStop()"></button>
+    <input type="text" id="timeElem" readonly="" />
+    <input type="text" id="progNameElem" readonly="" onClick="listTunes()" />
+  </div>
+  <select id="progSel" onChange="setSelectedProgIdx()"></select>
+  <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()" />
+  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 12.12.2018</span></div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+	<meta charset="utf-8" />
+	<title>UTF-8</title>
+	<meta name="generator" content="BBEdit 9.6" />
+	<style type="text/css">
+body {
+	font-family: Times, serif;
+}
+table {
+	border-collapse: collapse;
+}
+th {
+	background-color: #eee;
+}
+th, td {
+	border: 1px solid #ccc;
+	padding: 0.2em 0.4em;
+}
+tr:hover {
+	background-color: #ffd;
+}
+tr td:nth-of-type(2) {
+	font: 80% sans-serif;
+}
+span.A {
+	font-family: Arial;
+}
+span.A::before {
+	content: "Arial: ";
+}
+span.C {
+	font-family: Courier;
+}
+span.C::before {
+	content: "Courier: ";
+}
+span.H {
+	font-family: Helvetica;
+}
+span.H::before {
+	content: "Helvetica: ";
+}
+span.V {
+	font-family: Verdana;
+}
+span.V::before {
+	content: "Verdana: ";
+}
+.num {
+	font-family: Courier, monospace;
+}
+td.shy {
+	padding: 2px 0.4em;
+}
+td.shy textarea {
+	margin: 0;
+	border: 1px solid #aca;
+	font-size: 90%;
+}
+td.shy button, td.shy a {
+	vertical-align: top;
+	margin: 1em 0 0 0.5em;
+}
+td.shy a {
+	line-height: 240%;
+}
+hr {
+	margin: 1.5em;
+}
+	</style>
+	<script type="text/javascript">
+function byttTilSoftHyphen() {
+	var text = prompt("Skriv inn tekst der skråstreker skal erstattes av Soft Hyphens:", "et/ganske/langt/ord");
+	if (text) prompt("Resultat (kopiér):", text.replace(/\//g, String.fromCharCode(173)));
+	
+}
+	</script>
+</head>
+<body>
+<h1>Et lite utvalg UTF-8-tegn</h1>
+<table>
+	<tr><th></th><th scope="col">Navn</th><th scope="col">HTML</th><th scope="col">Mac OS X</th><th scope="col">Windows</th><th></th><th scope="col">merknad</th></tr>
+	<tr><td>&prime;</td><td>PRIME</td><td></td><td></td><td></td><td></td><td><a href="http://en.wikipedia.org/wiki/Prime_(symbol)">fot, minutter</a></td></tr>
+	<tr><td>&Prime;</td><td>DOUBLE PRIME</td><td></td><td></td><td></td><td></td><td>tommer, sekunder</td></tr>
+	<tr><td>‴</td><td>TRIPLE PRIME</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>°</td><td>DEGREE SIGN</td><td></td><td></td><td></td><td></td><td>°C</td></tr>
+	<tr><td>“</td><td>LEFT DOUBLE QUOTATION MARK</td><td>&amp;#8220;</td><td></td><td></td><td></td><td><span class="A">“</span>, <span class="H">“</span>, <span class="V">“</span>, <span class="C">“</span></td></tr>
+	<tr><td>”</td><td>RIGHT DOUBLE QUOTATION MARK</td><td>&amp;#8221;</td><td></td><td></td><td></td><td><span class="A">”</span>, <span class="H">”</span>, <span class="V">”</span>, <span class="C">”</span></td></tr>
+	<tr><td>„</td><td>DOUBLE LOW-9 QUOTATION MARK</td><td>&amp;#8222;</td><td></td><td></td><td></td>
+		<td>„Eldre variant” (på norsk) Se <a href="https://www.ordnett.no/spr&aring;kverkt&oslash;y/spr&aring;kvett.anfoerselstegn">Ordnett</a>.</td></tr>
+	<tr><td>—</td><td>EM DASH</td><td>&amp;#8212;</td><td>Shift-Alt -</td><td></td><td></td><td>lang <a href="http://no.wikipedia.org/wiki/Tankestrek">tankestrek</a></td></tr>
+	<tr><td>–</td><td>EN DASH</td><td>&amp;#8211;</td><td>Alt -</td><td>Alt <span class="num">0150</span></td><td></td><td>kort (norsk) <a href="http://no.wikipedia.org/wiki/Tankestrek">tankestrek</a>, 2–3 burritos</td></tr>
+	<tr><td>‒</td><td>FIGURE DASH</td><td>&amp;#8210;</td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>―</td><td>HORIZONTAL BAR</td><td>&amp;#8213;</td><td></td><td></td><td></td><td><a href="http://en.wikipedia.org/wiki/―#Horizontal_bar">horizontal bar</a></td></tr>
+	<tr><td>‐</td><td>HYPHEN</td><td></td><td></td><td></td><td></td><td><a href="http://en.wikipedia.org/wiki/Hyphen">hyphen</a></td></tr>
+	<tr><td>-</td><td>HYPHEN-MINUS</td><td></td><td>-</td><td>-</td><td></td><td><a href="http://no.wikipedia.org/wiki/Bindestrek">bindestrek/minus</a></td></tr>
+	<tr><td>&shy;</td><td>SOFT HYPHEN</td><td>&amp;#173;</td><td colspan="2">Word 2011: Cmd -</td>
+		<td></td>
+		<td class="shy"><textarea>nyttig i langt&shy;ord&shy;som&shy;kanskje&shy;ikke&shy;får&shy;plass&shy;på&shy;én&shy;linje</textarea> <button onclick="byttTilSoftHyphen()">Legg inn i ord</button> 
+			<a href="http://practicaltypography.com/optional-hyphens.html" target="_blank">optional hyphens</a></td></tr>
+	<tr><td>−</td><td>MINUS SIGN</td><td></td><td></td><td></td><td></td><td>minustegn</td></tr>
+	<tr><td>×</td><td>MULTIPLICATION SIGN</td><td></td><td></td><td></td><td></td><td>gangetegn</td></tr>
+	<tr><td>±</td><td>PLUS-MINUS SIGN</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>≈</td><td>ALMOST EQUAL TO</td><td>&amp;#8776;</td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>≡</td><td>IDENTICAL TO</td><td>&amp;#8801;</td><td></td><td></td><td></td>
+		<td><span class="A">≡</span>, <span class="H">≡</span>, <span class="V">≡</span>, <span class="C">≡</span></td></tr>
+	<tr><td>≣</td><td>STRICTLY EQUIVALENT TO</td><td>&amp;#8803;</td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>₂</td><td>SUBSCRIPT TWO</td><td>&amp;#8322;</td><td></td><td></td><td></td><td>H₂O</td></tr>
+	<tr><td>₃</td><td>SUBSCRIPT THREE</td><td>&amp;#8323;</td><td></td><td></td><td></td><td>NH₃</td></tr>
+	<tr><td>₄</td><td>SUBSCRIPT FOUR</td><td>&amp;#8324;</td><td></td><td></td><td></td><td>H₂SO₄</td></tr>
+	<tr><td>²</td><td>SUPERSCRIPT TWO</td><td></td><td></td><td></td><td></td><td>πr²</td></tr>
+	<tr><td>³</td><td>SUPERSCRIPT THREE</td><td></td><td></td><td></td><td></td><td>m³</td></tr>
+	<tr><td>∆</td><td>INCREMENT</td><td>&amp;#8710;</td><td>Shift-Alt d</td><td></td><td></td><td></td></tr>
+	<tr><td>𝛌</td><td>MATHEMATICAL BOLD SMALL LAMDA</td><td>&amp;#120524;</td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>µ</td><td>MICRO SIGN</td><td>&amp;#181;</td><td></td><td></td><td></td><td>µs</td></tr>
+	<tr><td>∏</td><td>N-ARY PRODUCT</td><td></td><td>Shift-Alt p</td><td></td><td></td><td></td></tr>
+	<tr><td>∑</td><td>N-ARY SUMMATION</td><td></td><td>Shift-Alt s</td><td></td><td></td><td></td></tr>
+	<tr><td>Δ</td><td>GREEK CAPITAL LETTER DELTA</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>λ</td><td>GREEK SMALL LETTER LAMBDA</td><td>&amp;#955;</td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>μ</td><td>GREEK SMALL LETTER MU</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>Π</td><td>GREEK CAPITAL LETTER PI</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>Σ</td><td>GREEK CAPITAL LETTER SIGMA</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>π</td><td>GREEK SMALL LETTER PI</td><td>&amp;#960;</td><td>Alt p</td><td></td><td></td><td></td></tr>
+	<tr><td>𝓮</td><td>MATHEMATICAL ITALIC SMALL E</td><td>&amp;#119890;</td><td></td><td></td><td></td>
+		<td>𝓮 = 2,71828…, <span class="A">𝓮</span>, <span class="H">𝓮</span>, <span class="V">𝓮</span>, <span class="C">𝓮</span></td></tr>
+	<tr><td>ℹ</td><td>INFORMATION SOURCE</td><td></td><td></td><td></td><td></td>
+		<td><span class="A">ℹ</span>, <span class="H">ℹ</span>, <span class="V">ℹ</span>, <span class="C">ℹ</span></td></tr>
+	<tr><td>⌘</td><td>PLACE OF INTEREST SIGN</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>Č</td><td>LATIN CAPITAL LETTER C WITH CARON</td><td></td><td></td><td></td><td></td><td>Čále</td></tr>
+	<tr><td>č</td><td>LATIN SMALL LETTER C WITH CARON</td><td>&amp;#269;</td><td></td><td></td><td></td><td>stáhtačálli</td></tr>
+	<tr><td>Đ</td><td>LATIN CAPITAL LETTER D WITH STROKE</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>đ</td><td>LATIN SMALL LETTER D WITH STROKE</td><td>&amp;#273;</td><td></td><td></td><td></td><td>ráđđeaddi</td></tr>
+	<tr><td>Ŋ</td><td>LATIN CAPITAL LETTER ENG</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>ŋ</td><td>LATIN SMALL LETTER ENG</td><td>&amp;#331;</td><td></td><td></td><td></td><td>Gáŋgaviikkas</td></tr>
+	<tr><td>Š</td><td>LATIN CAPITAL LETTER S WITH CARON</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>š</td><td>LATIN SMALL LETTER S WITH CARON</td><td></td><td></td><td></td><td></td><td>Kárášjoga</td></tr>
+	<tr><td>Ŧ</td><td>LATIN CAPITAL LETTER T WITH STROKE</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>ŧ</td><td>LATIN SMALL LETTER T WITH STROKE</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>Ž</td><td>LATIN CAPITAL LETTER Z WITH CARON</td><td></td><td></td><td></td><td></td><td></td></tr>
+	<tr><td>ž</td><td>LATIN SMALL LETTER Z WITH CARON</td><td></td><td></td><td></td><td></td><td>iežat</td></tr>
+	<tr><td>学</td><td>CJK UNIFIED IDEOGRAPH-5B66</td><td>&amp;#23398;</td><td></td><td></td><td></td><td><a href="http://codepoints.net/U+5B66">learning, knowledge; school</a></td></tr>
+	<tr><td>&#5800;</td><td>RUNIC LETTER ANSUZ A</td><td>&amp;#5800;</td><td></td><td></td><td></td><td rowspan="3">noe støtte på Windows (IE, FF), ikke støtte på eldre Mac (OSX≤10.7.5)</td></tr>
+	<tr><td>&#5842;</td><td>RUNIC LETTER BERKANAN BEORC BJARKAN B</td><td>&amp;#5842;</td><td></td><td></td><td></td></tr>
+	<tr><td>&#5809;</td><td>RUNIC LETTER RAIDO RAD REID R</td><td>&amp;#5809;</td><td></td><td></td><td></td></tr>
+	<tr><td>&#127826;</td><td>CHERRIES</td><td>&amp;#127826;</td><td></td><td></td><td></td><td rowspan="3">Emoji, krever nyere OS/nettleser</td></tr>
+	<tr><td>&#127876;</td><td>CHRISTMAS TREE</td><td>&amp;#127876;</td><td></td><td></td><td></td></tr>
+	<tr><td>&#128193;</td><td>FILE FOLDER</td><td>&amp;#128193;</td><td></td><td></td><td></td></tr>
+	<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+<hr />
+<p><a href="http://www.utf8-chartable.de/unicode-utf8-table.pl?unicodeinhtml=dec">UTF-8 encoding table and Unicode characters</a></p>
+<p><a href="http://www.utf8everywhere.org/">UTF-8 Everywhere</a>
+	(<a href="https://news.ycombinator.com/item?id=7070944" target="_blank">Hacker News comments</a>)</p>
+<p><a href="http://codepoints.net/">Codepoints: Unicode characters from Hieroglyphs to Dingbats</a></p>
+<p><a href="http://mathiasbynens.be/notes/javascript-unicode" target="_blank">JavaScript has a Unicode problem</a>
+	(<a href="https://news.ycombinator.com/item?id=7221362" target="_blank">Hacker News comments</a>)</p>
+<p><a href="https://medium.com/typography/989bb7902cf3">On dashes, hyphens, and other important aspects of life</a></p>
+<p><a href="https://news.ycombinator.com/item?id=6444077">On dashes, hyphens, and other - Hacker News comments</a></p>
+<p><a href="http://www.panix.com/~eli/unicode/convert.cgi?text=Her+kan+du+virkelig+boltre+deg+i+Unicode%21" target="_blank">𝑼𝒏𝒊𝒄𝒐𝒅𝒆 𝑻𝒆𝒙𝒕 𝑪𝒐𝒏𝒗𝒆𝒓𝒕𝒆𝒓</a></p>
+<p></p>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Navigator Info</title>
+  <meta name="generator" content="BBEdit 12.1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+@media only screen {
+  #media:after { content: "screen"; }
+  body { -webkit-text-size-adjust: 100%; }
+}
+@media only handheld {
+  #media:after { content: "handheld"; }
+}
+@media all and (orientation: portrait) {
+  #cssOrient:after { content: "portrait"; }
+}
+@media all and (orientation: landscape) {
+  #cssOrient:after { content: "landscape"; }
+}
+table {
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 2px 0.4em 2px 0.5em;
+}
+input[type="text"] {
+  width: 7em;
+  border: none;
+  font-size: 80%;
+}
+  </style>
+  <script type="text/javascript">
+
+function windowProperties() {
+  document.getElementById("inner").value = "" + window.innerWidth + " × " + window.innerHeight;
+  document.getElementById("outer").value = "" + window.outerWidth + " × " + window.outerHeight;
+  document.getElementById("winOrient").value = window.orientation;
+  document.getElementById("devicePixelRatio").value = window.devicePixelRatio;
+  document.getElementById("onpointerenter").value = "onpointerenter" in document.documentElement;
+  document.getElementById("ontouchstart").value = "ontouchstart" in document.documentElement;
+  document.getElementById("WebSocket").value = typeof WebSocket;
+  document.getElementById("import").value = ("import" in document.createElement("link"));
+}
+
+function allNavProps() {
+  var navProps = "";
+  for (var pName in navigator) {
+    navProps += pName + ": " + navigator[pName] + "\n";
+  }
+  return navProps;
+}
+
+window.onresize = windowProperties;
+window.onorientationchange = windowProperties;
+
+  </script>
+</head>
+<body onload="windowProperties()">
+<p><span id="media"><b>CSS media:</b> </span><br />
+  <span id="cssOrient"><b>CSS orientation:</b> </span>
+</p>
+<p id="navigator">
+<script type="text/javascript">
+
+with (document) {
+  write("<b>AppCodeName:</b> " + navigator.appCodeName + "<br />");
+  write("<b>AppName:</b> " + navigator.appName + "<br />");
+  write("<b>AppVersion:</b> " + navigator.appVersion + "<br />");
+  write("<b>UserAgent:</b> " + navigator.userAgent + "<br />");
+  write("<b>Platform:</b> " + navigator.platform + "<br />");
+  write("<b>Screen:</b> " + screen.width + " × " + screen.height + "<br />");
+}
+
+</script>
+<NOSCRIPT>
+This page requires JavaScript.
+</NOSCRIPT>
+</p>
+<table>
+  <tr><th>window.inner</th><td><input type="text" id="inner" readonly /></td></tr>
+  <tr><th>window.outer</th><td><input type="text" id="outer" readonly /></td></tr>
+  <tr><th>window.orientation</th><td><input type="text" id="winOrient" readonly /></td></tr>
+  <tr><th>window.devicePixelRatio</th><td><input type="text" id="devicePixelRatio" readonly /></td></tr>
+  <tr><th>"onpointerenter" in documentElement</th><td><input type="text" id="onpointerenter" readonly /></td></tr>
+  <tr><th>"ontouchstart" in documentElement</th><td><input type="text" id="ontouchstart" readonly /></td></tr>
+  <tr><th>typeof WebSocket</th><td><input type="text" id="WebSocket" readonly /></td></tr>
+  <tr><th>link rel="import"</th><td><input type="text" id="import" readonly /></td></tr>
+</table>
+<p><a href="javascript:alert(allNavProps())">All Navigator Properties</a></p>
+<hr />
+<small><i>Jon Kleiser, 12-Dec-2018</i></small>
+</body>
+</html>

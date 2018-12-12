@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Cosine Distance</title>
+  <meta name="generator" content="BBEdit 11.6" />
+  <style>
+body {
+  margin: 2cm;
+  background-color: #eed;
+  font: 16px Verdana;
+}
+input {
+  margin: 0.1em 0.3em;
+  font: 16px Verdana;
+  text-align: right;
+  padding: 0.3em 0.5em;
+  width: 14em;
+}
+  </style>
+  <script type="text/javascript">
+  
+function calc() {
+  var cosDist = document.querySelector("#cosDist").value;
+  var cosSim = 1.0 - cosDist;
+  document.querySelector("#cosSim").value = cosSim;
+  var rads = Math.acos(cosSim);
+  document.querySelector("#rads").value = rads;
+  var rads2 = rads * 0.5;
+  document.querySelector("#rads2").value = rads2;
+  var cosSim2 = Math.cos(rads2);
+  document.querySelector("#cosSim2").value = cosSim2;
+  var cosDist2 = 1.0 - cosSim2;
+  document.querySelector("#cosDist2").value = cosDist2;
+}
+
+  </script>
+</head>
+<body onload="calc();">
+<table>
+  <tr><th></th><th>Cosine Distance</th><th>Cosine Similarity</th><th>Radians</th></tr>
+  <tr>
+    <th>Orig.</th>
+    <td><input id="cosDist" type="number" tabindex="1"
+                min="0.0" max="2.0" step="0.1" value="0.0" onchange="calc();"></td>
+    <td><input id="cosSim" type="number" tabindex="2" readonly></td>
+    <td><input id="rads" type="number" tabindex="3" readonly></td>
+  </tr>
+  <tr>
+    <th>Half</th>
+    <td><input id="cosDist2" type="number" tabindex="6" readonly></td>
+    <td><input id="cosSim2" type="number" tabindex="5" readonly></td>
+    <td><input id="rads2" type="number" tabindex="4" readonly></td>
+  </tr>
+</table>
+</body>
+</html>
