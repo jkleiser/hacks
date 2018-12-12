@@ -35,7 +35,7 @@ input[type="text"] {
   font-size: 80%;
 }
   </style>
-  <script type="text/javascript">
+  <script>
 
 function windowProperties() {
   document.getElementById("inner").value = "" + window.innerWidth + " × " + window.innerHeight;
@@ -66,7 +66,7 @@ window.onorientationchange = windowProperties;
   <span id="cssOrient"><b>CSS orientation:</b> </span>
 </p>
 <p id="navigator">
-<script type="text/javascript">
+<script>
 
 with (document) {
   write("<b>AppCodeName:</b> " + navigator.appCodeName + "<br />");
