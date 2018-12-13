@@ -21,18 +21,26 @@
 }
 table {
   border-collapse: collapse;
+  margin-bottom: 1em;
+  max-width: 40em;
 }
 th {
   text-align: left;
 }
 th, td {
   border: 1px solid #ccc;
-  padding: 2px 0.4em 2px 0.5em;
+  color: #444;
+  padding: 3px 0.4em 3px 0.5em;
+}
+td {
+  font-family: system-ui, sans-serif;
+  font-size: 85%;
+  line-height: 140%;
 }
 input[type="text"] {
   width: 7em;
   border: none;
-  font-size: 80%;
+  font-size: 85%;
 }
   </style>
   <script>
@@ -62,26 +70,30 @@ window.onorientationchange = windowProperties;
   </script>
 </head>
 <body onload="windowProperties()">
-<p><span id="media"><b>CSS media:</b> </span><br />
-  <span id="cssOrient"><b>CSS orientation:</b> </span>
-</p>
-<p id="navigator">
+
+<table>
+  <tr><th>CSS media</th><td id="media"></td></tr>
+  <tr><th>CSS orientation</th><td id="cssOrient"></td></tr>
+</table>
+
+<table id="navigator">
 <script>
 
 with (document) {
-  write("<b>AppCodeName:</b> " + navigator.appCodeName + "<br />");
-  write("<b>AppName:</b> " + navigator.appName + "<br />");
-  write("<b>AppVersion:</b> " + navigator.appVersion + "<br />");
-  write("<b>UserAgent:</b> " + navigator.userAgent + "<br />");
-  write("<b>Platform:</b> " + navigator.platform + "<br />");
-  write("<b>Screen:</b> " + screen.width + " × " + screen.height + "<br />");
+  write("<tr><th>AppCodeName</th><td>" + navigator.appCodeName + "</td></tr>");
+  write("<tr><th>AppName</th><td>" + navigator.appName + "</td></tr>");
+  write("<tr><th>AppVersion</th><td>" + navigator.appVersion + "</td></tr>");
+  write("<tr><th>UserAgent</th><td>" + navigator.userAgent + "</td></tr>");
+  write("<tr><th>Platform</th><td>" + navigator.platform + "</td></tr>");
+  write("<tr><th>Screen</th><td>" + screen.width + " × " + screen.height + "</td></tr>");
 }
 
 </script>
 <NOSCRIPT>
 This page requires JavaScript.
 </NOSCRIPT>
-</p>
+</table>
+
 <table>
   <tr><th>window.inner</th><td><input type="text" id="inner" readonly /></td></tr>
   <tr><th>window.outer</th><td><input type="text" id="outer" readonly /></td></tr>
@@ -94,6 +106,6 @@ This page requires JavaScript.
 </table>
 <p><a href="javascript:alert(allNavProps())">All Navigator Properties</a></p>
 <hr />
-<small><i>Jon Kleiser, 12-Dec-2018</i></small>
+<small><i>Jon Kleiser, 13-Dec-2018</i></small>
 </body>
 </html>
