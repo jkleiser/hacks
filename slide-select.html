@@ -8,16 +8,20 @@
   <style>
 body {
   box-sizing: border-box;
+  overflow: hidden;
 }
 .slider {
-  margin: 20px;
+  margin: 10px;
   border: 1px solid green;
   width: 310px;
   height: 150px;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
+  -webkit-scroll-snap-points-y: repeat(30px);
   scroll-snap-points-y: repeat(30px);
+  -webkit-scroll-snap-type: mandatory;
   scroll-snap-type: mandatory;
   scroll-behavior: smooth;
 }
