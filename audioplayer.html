@@ -110,8 +110,8 @@ var jazzInsp = "http://recordings.talkshoe.com/";
 var krvs = "http://cpa.ds.npr.org/krvs/audio/";
 var mio = "http://musicinsideout.wwno.org/audio/";
 var phc = "http://167.88.156.221/phc/";
-var tunein = "http://feed.tunein.com/json/livenowjson.aspx?stationId=";
-var widgets = "http://widgets-proxy.cloudapp.net/webapi/station/";
+var tunein = "https://feed.tunein.com/json/livenowjson.aspx?stationId=";
+var widgets = "https://widgets-proxy.cloudapp.net/webapi/station/";
 var piPodcast = "http://thepipodcast.com/media/";
 var curProg = null;
 var curStationId = null;  // tunein
@@ -136,7 +136,7 @@ var progArr = [
   {desc: "≈ NRK P1 Østland", src: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_mp3_m"},
   {desc: "≈ NRK P2", src: "http://lyd.nrk.no:80/nrk_radio_p2_mp3_h"},
   {desc: "≈ Ordentlig Radio", src: "http://mms-live.online.no/oradio_mp3_m"},
-  {desc: "≈ Radio Vinyl", src: "http://ads-e-bauerse-fm-04-cr.sharp-stream.com/vinyl_no_aac"},
+  {desc: "≈ Radio Vinyl", src: "https://live-bauerno.sharp-stream.com/vinyl_no_mp3"},
   {desc: "KRVS Earth Beat 13.09.2015", src: krvs + "2015/09/earth_beat_19-00_0.mp3", startTime: 105},
   {desc: "KRVS Encore 08.08.2015", src: krvs + "2015/08/Encore_15-00_1.mp3"},
   {desc: "KRVS Encore 16.08.2015", src: krvs + "2015/08/Encore_15-00_31.mp3"},
@@ -376,6 +376,6 @@ function listTunes() {
   </div>
   <select id="progSel" onChange="setSelectedProgIdx()"></select>
   <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()" />
-  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 12.12.2018</span></div>
+  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 21.12.2018</span></div>
 </body>
 </html>
