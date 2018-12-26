@@ -6,6 +6,9 @@
   <title>Slide-select</title>
   <meta name="generator" content="BBEdit 12.5" />
   <style>
+:root {
+  --h: 50px;
+}
 body {
   box-sizing: border-box;
   overflow: hidden;
@@ -16,7 +19,7 @@ body {
   margin-bottom: 20px;
   border: 1px solid #ddd;
   width: 300px;
-  height: 200px;
+  height: calc(var(--h) * 5);
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -30,8 +33,8 @@ body {
   padding: 0;
 }
 .slider li {
-  height: 40px;
-  font-size: 26px;
+  height: var(--h);
+  font-size: calc(var(--h) * 0.65);
   font-weight: 400;
   line-height: 150%;
   padding-left: 8px;
@@ -51,7 +54,10 @@ body {
   background-color: #333;
   color: #9f9;
 }
-
+input#h {
+  text-align: center;
+  width: 4em;
+}
 @media all and (max-width: 600px) {
   .dark {
     background-color: #666;
@@ -70,31 +76,52 @@ const handleUlClick = (evt) => {
 }
   </script>
 </head>
-<body class="dark">
-<div class="slider">
-  <ul>
-    <li id="item-1">item-1 very, VERY, looong</li>
-    <li id="item-2">item-2</li>
-    <li id="item-3">item-3</li>
-    <li id="item-4">item-4</li>
-    <li id="item-5">item-5</li>
-    <li id="item-6">item-6</li>
-    <li id="item-7">item-7</li>
-    <li id="item-8">item-8</li>
-    <li id="item-9">item-9</li>
-    <li id="item-10">item-10 ÆØÅ asdfghj</li>
-    <li id="item-11">item-11 🐒</li>
-    <li id="item-12">item-12</li>
-    <li id="item-13">item-13</li>
-    <li id="item-14">item-14</li>
-    <li id="item-15">item-15</li>
-    <li id="item-16">item-16</li>
-    <li id="item-17">item-17</li>
-    <li id="item-18">item-18</li>
-    <li id="item-19">item-19</li>
-  </ul>
-</div>
+<body class="dark" onload="updateRootProperty()">
+  <div class="slider">
+    <ul>
+      <li id="item-1">item-1 very, VERY, looong</li>
+      <li id="item-2">item-2</li>
+      <li id="item-3">item-3</li>
+      <li id="item-4">item-4</li>
+      <li id="item-5">item-5</li>
+      <li id="item-6">item-6</li>
+      <li id="item-7">item-7</li>
+      <li id="item-8">item-8</li>
+      <li id="item-9">item-9</li>
+      <li id="item-10">ÆØÅ asdfghj</li>
+      <li id="item-11">item-11 🐒</li>
+      <li id="item-12">item-12</li>
+      <li id="item-13">item-13</li>
+      <li id="item-14">item-14</li>
+      <li id="item-15">item-15</li>
+      <li id="item-16">item-16</li>
+      <li id="item-17">item-17</li>
+      <li id="item-18">item-18</li>
+      <li id="item-19">item-19</li>
+    </ul>
+  </div>
+  <button onclick="changeSliderLiHeight(-5);">Smaller</button>
+  <input type="text" id="h" readonly>
+  <button onclick="changeSliderLiHeight(5);">Bigger</button>
   <script>
+const root = document.documentElement;
+let sliderLiHeight = 50;
+
+const updateRootProperty = () => {
+  root.style.setProperty("--h", sliderLiHeight + "px");
+  document.querySelector("input#h").value = sliderLiHeight;
+}
+
+const changeSliderLiHeight = (dh) => {
+  sliderLiHeight += dh;
+  updateRootProperty();
+}
+
+const setSliderLiHeight = (h) => {
+  sliderLiHeight = h;
+  updateRootProperty();
+}
+
 const ul = document.querySelector(".slider ul");
 ul.addEventListener("click", handleUlClick);
   </script>
