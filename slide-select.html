@@ -8,6 +8,8 @@
   <style>
 :root {
   --h: 50px;
+  --darkBkgnd: #550;
+  --stdColor: #ffe;
 }
 body {
   box-sizing: border-box;
@@ -20,6 +22,7 @@ body {
   border: 1px solid #ddd;
   width: 300px;
   height: calc(var(--h) * 5);
+  letter-spacing: 2px;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -47,12 +50,12 @@ body {
   background-color: #cfc;
 }
 .dark .slider {
-  background-color: #666;
-  color: #eee;
+  background-color: var(--darkBkgnd);
+  color: var(--stdColor);
 }
 .dark .slider li.selected {
-  background-color: #333;
-  color: #9f9;
+  background-color: #330;
+  color: #bf3;
 }
 input#h {
   text-align: center;
@@ -60,8 +63,8 @@ input#h {
 }
 @media all and (max-width: 600px) {
   .dark {
-    background-color: #666;
-    color: #eee;
+    background-color: var(--darkBkgnd);
+    color: var(--stdColor);
   }
 }
   </style>
@@ -79,7 +82,7 @@ const handleUlClick = (evt) => {
 <body class="dark" onload="updateRootProperty()">
   <div class="slider">
     <ul>
-      <li id="item-1">item-1 very, VERY, looong</li>
+      <li id="item-1">item-1 very, looong</li>
       <li id="item-2">item-2</li>
       <li id="item-3">item-3</li>
       <li id="item-4">item-4</li>
