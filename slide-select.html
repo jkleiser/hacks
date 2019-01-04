@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Slide-select</title>
   <meta name="generator" content="BBEdit 12.5" />
+  <link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Capriola' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Hammersmith One' rel='stylesheet'>
   <style>
 :root {
-  --h: 50px;
+  --h: 60px;
   --darkBkgnd: #550;
   --stdColor: #ffe;
 }
@@ -15,14 +18,14 @@ body {
   box-sizing: border-box;
   overflow: hidden;
   margin: 20px 8px;
-  font-family: Arial, Verdana, sans-serif;
+  font-family: Capriola, Verdana, sans-serif;
 }
 .slider {
   margin-bottom: 20px;
   border: 1px solid #ddd;
   width: 300px;
   height: calc(var(--h) * 5);
-  letter-spacing: 2px;
+  /*letter-spacing: 0px;*/
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -82,19 +85,19 @@ const handleUlClick = (evt) => {
 <body class="dark" onload="updateRootProperty()">
   <div class="slider">
     <ul>
-      <li id="item-1">item-1 very, looong</li>
-      <li id="item-2">item-2</li>
-      <li id="item-3">item-3</li>
-      <li id="item-4">item-4</li>
-      <li id="item-5">item-5</li>
-      <li id="item-6">item-6</li>
-      <li id="item-7">item-7</li>
-      <li id="item-8">item-8</li>
-      <li id="item-9">item-9</li>
-      <li id="item-10">ÆØÅ asdfghj</li>
-      <li id="item-11">item-11 🐒</li>
-      <li id="item-12">item-12</li>
-      <li id="item-13">item-13</li>
+      <li id="item-1">ABeeZee</li>
+      <li id="item-2">Acme</li>
+      <li id="item-3">Bitter</li>
+      <li id="item-4">Capriola</li>
+      <li id="item-5">Encode Sans Semi Expanded</li>
+      <li id="item-6">Fira Sans</li>
+      <li id="item-7">Hammersmith One</li>
+      <li id="item-8">Imprima</li>
+      <li id="item-9">Nova Flat</li>
+      <li id="item-10">Open Sans</li>
+      <li id="item-11">Open Sans Semi-Bold</li>
+      <li id="item-12">Sarala</li>
+      <li id="item-13">Ubuntu</li>
       <li id="item-14">item-14</li>
       <li id="item-15">item-15</li>
       <li id="item-16">item-16</li>
@@ -108,7 +111,7 @@ const handleUlClick = (evt) => {
   <button onclick="changeSliderLiHeight(5);">Bigger</button>
   <script>
 const root = document.documentElement;
-let sliderLiHeight = 50;
+let sliderLiHeight = 60;
 
 const updateRootProperty = () => {
   root.style.setProperty("--h", sliderLiHeight + "px");
