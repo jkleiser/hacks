@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Slide-select</title>
   <meta name="generator" content="BBEdit 12.5" />
-  <link href='https://fonts.googleapis.com/css?family=Acme' rel='stylesheet'>
   <link href='https://fonts.googleapis.com/css?family=Capriola' rel='stylesheet'>
-  <link href='https://fonts.googleapis.com/css?family=Hammersmith One' rel='stylesheet'>
   <style>
 :root {
   --h: 60px;
@@ -21,6 +19,7 @@ body {
   font-family: Capriola, Verdana, sans-serif;
 }
 .slider {
+  /*position: relative;*/
   margin-bottom: 20px;
   border: 1px solid #ddd;
   width: 300px;
@@ -71,16 +70,6 @@ input#h {
   }
 }
   </style>
-  <script>
-
-const handleUlClick = (evt) => {
-  const selectedLi = document.querySelector("div.slider li.selected");
-  const targetLi = evt.target;
-  if (selectedLi) selectedLi.className = "";
-  targetLi.className = "selected";
-  console.log("handleUlClick: %s", targetLi.id);
-}
-  </script>
 </head>
 <body class="dark" onload="updateRootProperty()">
   <div class="slider">
@@ -111,7 +100,17 @@ const handleUlClick = (evt) => {
   <button onclick="changeSliderLiHeight(5);">Bigger</button>
   <script>
 const root = document.documentElement;
+const slider = document.querySelector("div.slider");
 let sliderLiHeight = 60;
+
+const handleUlClick = (evt) => {
+  const selectedLi = document.querySelector("div.slider li.selected");
+  const targetLi = evt.target;
+  if (selectedLi) selectedLi.className = "";
+  targetLi.className = "selected";
+  console.log("handleUlClick: id=%s, offsetTop=%s", targetLi.id, targetLi.offsetTop);
+  console.log("slider.scrollTop=%s", slider.scrollTop);
+}
 
 const updateRootProperty = () => {
   root.style.setProperty("--h", sliderLiHeight + "px");
