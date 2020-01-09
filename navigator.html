@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Navigator Info</title>
-  <meta name="generator" content="BBEdit 12.1" />
+  <meta name="generator" content="BBEdit 13.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
 @media only screen {
@@ -53,6 +53,7 @@ function windowProperties() {
   document.getElementById("onpointerenter").value = "onpointerenter" in document.documentElement;
   document.getElementById("ontouchstart").value = "ontouchstart" in document.documentElement;
   document.getElementById("WebSocket").value = typeof WebSocket;
+  document.getElementById("serviceWorker").value = typeof navigator.serviceWorker;
   document.getElementById("import").value = ("import" in document.createElement("link"));
 }
 
@@ -103,10 +104,11 @@ This page requires JavaScript.
   <tr><th>"onpointerenter" in documentElement</th><td><input type="text" id="onpointerenter" readonly /></td></tr>
   <tr><th>"ontouchstart" in documentElement</th><td><input type="text" id="ontouchstart" readonly /></td></tr>
   <tr><th>typeof WebSocket</th><td><input type="text" id="WebSocket" readonly /></td></tr>
+  <tr><th>navigator.serviceWorker</th><td><input type="text" id="serviceWorker" readonly /></td></tr>
   <tr><th>link rel="import"</th><td><input type="text" id="import" readonly /></td></tr>
 </table>
 <p><a href="javascript:alert(allNavProps())">All Navigator Properties</a></p>
 <hr />
-<small><i>Jon Kleiser, 13-Dec-2018</i></small>
+<small><i>Jon Kleiser, 09-Jan-2020</i></small>
 </body>
 </html>
