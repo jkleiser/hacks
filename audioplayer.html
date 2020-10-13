@@ -126,7 +126,6 @@ var progArr = [
   {desc: "≈ Cajun Music Radio", src: "http://15913.live.streamtheworld.com/SAM07AAC007_SC",
     dbid: "CajunMR", wStation: 74303},  // http://15913.live.streamtheworld.com/SAM07AAC007_SC
   {desc: "≈ Radio Louisiana", src: "http://radio3.citrus3.com:8416/;"},  // http://91.121.134.23:8416/stream/1/?cb=219651.mp3
-  {desc: "≈ Retro Roots Radio", src: "http://144.217.253.136:8412/stream"},
   {desc: "≈ KPFA, California", src: "http://stations.pacifica.org:8000/kpfa_64"},
   {desc: "≈ Jazz Ascona", src: "http://178.209.40.106:9002/stream"},
   {desc: "≈ Vallenato Internacional", src: "http://server7.servistreaming.com:10010/stream"},
@@ -135,6 +134,7 @@ var progArr = [
   {desc: "≈ NRK Klassisk", src: "http://lyd.nrk.no/nrk_radio_klassisk_mp3_m"},
   {desc: "≈ NRK P1 Østland", src: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_mp3_m"},
   {desc: "≈ NRK P2", src: "http://lyd.nrk.no:80/nrk_radio_p2_mp3_h"},
+  {desc: "≈ P9 Retro", src: "https://p9.p4groupaudio.com/P09_MM?station=5&codec=mp3&quality=medium"},
   {desc: "≈ Ordentlig Radio", src: "http://mms-live.online.no/oradio_mp3_m"},
   {desc: "≈ Radio Vinyl", src: "https://live-bauerno.sharp-stream.com/vinyl_no_mp3"},
   {desc: "KRVS Earth Beat 13.09.2015", src: krvs + "2015/09/earth_beat_19-00_0.mp3", startTime: 105},
@@ -372,6 +372,6 @@ function listTunes() {
   </div>
   <select id="progSel" onChange="setSelectedProgIdx()"></select>
   <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()" />
-  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 18.07.2020</span></div>
+  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 13.10.2020</span></div>
 </body>
 </html>
