@@ -7,19 +7,20 @@
   <meta name="generator" content="BBEdit 13.1" />
   <style type="text/css" title="text/css">
 body {
-	background-color: #eee;
+  background-color: #eee;
 }
 p {
-	margin: 2px 0 2px 0;
+  margin: 2px 0 2px 0;
 }
 textarea {
-	margin: 0;
-	padding: 0.5em;
-	width: 90%;
-	font: 18px serif;
+  margin: 0;
+  padding: 0.5em;
+  width: 90%;
+  height: 38vh;
+  font: 18px serif;
 }
 input {
-	margin: 6px 6px 6px 20px;
+  margin: 6px 6px 6px 20px;
 }
 	</style>
 	<script type="text/javascript" language="javascript">
@@ -74,14 +75,14 @@ function hideSource() {
 </head>
 <body>
 <p>Enter source text here:</p>
-<textarea id="source" rows="14">If you haven't got any (suitable) text, try this “sample text”.</textarea>
+<textarea id="source">If you haven't got any (suitable) text, try this “sample text”.</textarea>
 <p>
 	<label><input id="keepFirst" type="checkbox" checked="" />Keep First Char.</label>
 	<label><input id="keepLast" type="checkbox" />Keep Last Char.</label>
 	<input type="button" value="Mix letters" onclick="mixLettersInText(); hideSource();" />
 </p>
 <p>Result:</p>
-<textarea id="result" rows="14"></textarea>
+<textarea id="result"></textarea>
 <hr />
 Wikipedia: <a href="http://en.wikipedia.org/wiki/Typoglycemia">Typoglycemia</a>
 </body>
