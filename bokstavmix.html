@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Bokstavmix</title>
+	<meta name="generator" content="BBEdit 13.1" />
+	<style type="text/css" title="text/css">
+body {
+	background-color: #eee;
+}
+p {
+	margin: 2px 0 2px 0;
+}
+textarea {
+	margin: 0;
+	padding: 0.5em;
+	width: 90%;
+	font: 18px serif;
+}
+input {
+	margin: 6px 6px 6px 20px;
+}
+	</style>
+	<script type="text/javascript" language="javascript">
+
+function mixLetters(text, keepFirst, keepLast) {
+	const sepMatch = text.match(/[ «»“”"\'\-\/\.\,\:\;\!\?()\[\]\{\}\n\r\t]/);
+	if (sepMatch) {
+		const sep = sepMatch[0], parts = text.split(sep);
+		for (let i=0; i<parts.length; i++) {
+			parts[i] = mixLetters(parts[i], keepFirst, keepLast);
+		}
+		text = parts.join(sep);
+	} else {
+		if (text.length >= 2 + (keepFirst ? 1 : 0) + (keepLast ? 1 : 0)) {
+			let firstChar = "", lastChar = "";
+			if (keepFirst) {
+				firstChar = text.charAt(0);
+				text = text.substring(1);
+			}
+			if (keepLast) {
+				lastChar = text.charAt(text.length - 1);
+				text = text.substring(0, text.length - 1);
+			}
+			if (text.length == 2) {
+				text = text.charAt(1) + text.charAt(0);
+			} else {
+				var textArr = text.split("");
+				text = "";
+				while (textArr.length > 0) {
+					text += textArr.splice(Math.floor(Math.random() * textArr.length), 1);
+				}
+			}
+			text = firstChar + text + lastChar;
+		}
+	}
+	return text;
+}
+
+function mixLettersInText() {
+	document.getElementById("result").value =
+		mixLetters(document.getElementById("source").value,
+						document.getElementById("keepFirst").checked,
+						document.getElementById("keepLast").checked);
+}
+
+function hideSource() {
+	const src = document.getElementById("source");
+	//src.rows = 1;
+}
+
+	</script>
+</head>
+<body>
+<p>Enter source text here:</p>
+<textarea id="source" rows="14">If you haven't got any (suitable) text, try this “sample text”.</textarea>
+<p>
+	<label><input id="keepFirst" type="checkbox" checked="" />Keep First Char.</label>
+	<label><input id="keepLast" type="checkbox" />Keep Last Char.</label>
+	<input type="button" value="Mix letters" onclick="mixLettersInText(); hideSource();" />
+</p>
+<p>Result:</p>
+<textarea id="result" rows="14"></textarea>
+<hr />
+Wikipedia: <a href="http://en.wikipedia.org/wiki/Typoglycemia">Typoglycemia</a>
+</body>
+</html>
