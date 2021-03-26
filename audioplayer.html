@@ -95,7 +95,7 @@ select#progSel, option, #loadSrcBtn {
     margin: 20px;
   }
   div.audio {
-    padding: 60px 12px 0 0;
+    padding: 120px 12px 0 0;
   }
   div.custom {
     width: 430px;
@@ -133,6 +133,7 @@ var progArr = [
   {desc: "≈ NRK Jazz", src: "http://lyd.nrk.no/nrk_radio_jazz_mp3_m"},
   {desc: "≈ NRK Klassisk", src: "http://lyd.nrk.no/nrk_radio_klassisk_mp3_m"},
   {desc: "≈ NRK P1 Østland", src: "http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_mp3_m"},
+  {desc: "≈ NRK P1+", src: "http://lyd.nrk.no/nrk_radio_p1pluss_mp3_h.m3u"},
   {desc: "≈ NRK P2", src: "http://lyd.nrk.no:80/nrk_radio_p2_mp3_h"},
   {desc: "≈ P9 Retro", src: "https://p9.p4groupaudio.com/P09_MM?station=5&codec=mp3&quality=medium"},
   {desc: "≈ Ordentlig Radio", src: "http://mms-live.online.no/oradio_mp3_m"},
@@ -372,6 +373,6 @@ function listTunes() {
   </div>
   <select id="progSel" onChange="setSelectedProgIdx()"></select>
   <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()" />
-  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 13.10.2020</span></div>
+  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 25.03.2021</span></div>
 </body>
 </html>
