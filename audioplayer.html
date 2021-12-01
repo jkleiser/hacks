@@ -106,7 +106,7 @@ select#progSel, option, #loadSrcBtn {
 var audioElem, startStopBtn, timeElem, infoElem, progNameElem, progSel, progIdx = 0;
 var amRoutes = "http://americanroutes.s3.amazonaws.com/shows/";
 var bbs = "http://bluesbeforesunrise.org/BBS_Audio/";  // may be wrong, not used
-var jazzInsp = "http://recordings.talkshoe.com/";
+var jazzInsp = "https://cdn.simplecast.com/audio/7341b3/7341b3d4-fd40-41f9-8439-45ffe73a0f69/";
 var krvs = "http://cpa.ds.npr.org/krvs/audio/";
 var mio = "http://musicinsideout.wwno.org/audio/";
 var phc = "http://167.88.156.221/phc/";
@@ -123,10 +123,9 @@ var progArr = [
   {desc: "≈ WWOZ, Louisiana", src: "https://wwoz-sc.streamguys1.com/wwoz-hi.mp3"},
   {desc: "≈ American Roots", src: "https://igor.torontocast.com:1945/stream",
     dbid: "AmRoots", stationId: 283449},
-  {desc: "≈ Cajun Music Radio", src: "http://18703.live.streamtheworld.com/SAM07AAC007_SC",
+  {desc: "≈ Cajun Music Radio", src: "http://15233.live.streamtheworld.com/SAM07AAC007_SC",
     dbid: "CajunMR", wStation: 74303},  // http://15913.live.streamtheworld.com/SAM07AAC007_SC
   {desc: "≈ Radio Louisiana", src: "http://radio3.citrus3.com:8416/;"},  // http://91.121.134.23:8416/stream/1/?cb=219651.mp3
-  {desc: "≈ KPFA, California", src: "http://stations.pacifica.org:8000/kpfa_64"},
   {desc: "≈ Jazz Ascona", src: "http://178.209.40.106:9002/stream"},
   {desc: "≈ Vallenato Internacional", src: "http://server7.servistreaming.com:10010/stream"},
   {desc: "≈ NRK Alltid Nyheter", src: "http://lyd.nrk.no:80/nrk_radio_alltid_nyheter_mp3_h"},
@@ -138,6 +137,7 @@ var progArr = [
   {desc: "≈ P9 Retro", src: "https://p9.p4groupaudio.com/P09_MM?station=5&codec=mp3&quality=medium"},
   {desc: "≈ Ordentlig Radio", src: "http://mms-live.online.no/oradio_mp3_m"},
   {desc: "≈ Radio Vinyl", src: "https://live-bauerno.sharp-stream.com/vinyl_no_mp3"},
+  {desc: "≈ radiOrakel", src: "https://stream.radiorakel.no/fm993.mp3"},
   {desc: "KRVS Earth Beat 13.09.2015", src: krvs + "2015/09/earth_beat_19-00_0.mp3", startTime: 105},
   {desc: "KRVS Encore 08.08.2015", src: krvs + "2015/08/Encore_15-00_1.mp3"},
   {desc: "KRVS Encore 16.08.2015", src: krvs + "2015/08/Encore_15-00_31.mp3"},
@@ -150,25 +150,28 @@ var progArr = [
   {desc: "KRVS Freetown Radio 21.08.2015", src: krvs + "2015/08/freetown_radio_15-00_1.mp3"},
   {desc: "Am. Routes: Will the Circle Be", src: amRoutes + "1343_01.mp3"},
   {desc: "Am. Routes: Jazz Vibes", src: amRoutes + "1343_02.mp3"},
-  {desc: "Am. Routes 1350_01", src: amRoutes + "1350_01.mp3"},
-  {desc: "Am. Routes 1350_02", src: amRoutes + "1350_02.mp3"},
-  {desc: "Am. Routes 1425_01", src: amRoutes + "1425_01.mp3"},
-  {desc: "Am. Routes 1425_02", src: amRoutes + "1425_02.mp3"},
-  {desc: "Am. Routes 1522_01", src: amRoutes + "1522_01.mp3"},
-  {desc: "Am. Routes 1522_02", src: amRoutes + "1522_02.mp3"},
-  {desc: "Am. Routes 1524_01", src: amRoutes + "1524_01.mp3"},
-  {desc: "Am. Routes 1524_02", src: amRoutes + "1524_02.mp3"},
-  {desc: "Am. Routes 1526_01", src: amRoutes + "1526_01.mp3"},
-  {desc: "Am. Routes 1526_02", src: amRoutes + "1526_02.mp3"},
-  {desc: "Am. Routes 1532_3", src: amRoutes + "1532_3.mp3"},
-  {desc: "Am. Routes 1537_01", src: amRoutes + "1537_01.L%201.mp3"},
-  {desc: "Am. Routes 1537_02", src: amRoutes + "1537_02.L%201.mp3"},
+  {desc: "Am. Routes Loretta Lynn", src: amRoutes + "1350_01.mp3"},
+  {desc: "Am. Routes Honky Tonk, Michot Bros.", src: amRoutes + "1350_02.mp3"},
+  {desc: "Am. Routes Swamp Pop", src: amRoutes + "1425_02.mp3"},
+  {desc: "Am. Routes Rodney Crowell 01", src: amRoutes + "1522_01.mp3"},
+  {desc: "Am. Routes Dr. John 02", src: amRoutes + "1522_02.mp3"},
+  {desc: "Am. Routes Duos & Families 01", src: amRoutes + "1524_01.mp3"},
+  {desc: "Am. Routes Duos & Families 02", src: amRoutes + "1524_02.mp3"},
+  {desc: "Am. Routes Jerry Garcia 01", src: amRoutes + "1526_01.mp3"},
+  {desc: "Am. Routes Jerry Garcia 02", src: amRoutes + "1526_02.mp3"},
+  {desc: "Am. Routes Gulf Coast Rock", src: amRoutes + "1532_3.mp3"},
+  {desc: "Am. Routes Jug Band 01", src: amRoutes + "1537_01.L%201.mp3"},
+  {desc: "Am. Routes Cajun++ 02", src: amRoutes + "1537_02.L%201.mp3"},
   {desc: "Am. Routes: Alan Lomax 01", src: amRoutes + "1546_01.mp3"},
   {desc: "Am. Routes: Alan Lomax 02", src: amRoutes + "1546_02.mp3"},
   {desc: "Am. Routes: Flaco Jimenez", src: amRoutes + "1619_Hr1_01.mp3"},
   {desc: "Am. Routes: Eddie Palmieri", src: amRoutes + "1619_Hr2_01.mp3"},
-  {desc: "Jazz Insp.: Powell, Riley", src: jazzInsp + "TC-30000/TS-805153.mp3"},
-  {desc: "Jazz Insp.: Dick Hyman", src: jazzInsp + "TC-30000/TS-962527.mp3"},
+  {desc: "Am. Routes: Harry Smith Antho 01", src: amRoutes + "2129_01.mp3"},
+  {desc: "Am. Routes: Harry Smith Antho 02", src: amRoutes + "2129_02.mp3"},
+  {desc: "Am. Routes: Newport Jazz", src: amRoutes + "2141_01.mp3"},
+  {desc: "Am. Routes: Newport Folk", src: amRoutes + "2141_02.mp3"},
+  {desc: "Jazz Insp.: Powell, Riley", src: jazzInsp + "5dcb123a-8af3-4f4b-9fc7-cd12252fd611/333dbac4e77b0f6b64e47628521ce1130f216e6c_tc.mp3"},
+  {desc: "Jazz Insp.: Dick Hyman", src: jazzInsp + "7c45f93a-99c6-4438-864c-2572c554a526/9171f0cf897bc509e45eed6db25ad8d0e97df1a5_tc.mp3"},
   {desc: "Music In-Out: M. White", src: mio + "MIO_MichaelWhite_ShowMix_080615.mp3"},
   {desc: "Music In-Out: Billington", src: mio + "MIO_ScottBillington_ShowMixMP3_12102015.mp3"},
   {desc: "Prairie Home: The Revelers", src: phc + "2016/02/20/phc_20160220_128.mp3"},
@@ -373,6 +376,6 @@ function listTunes() {
   </div>
   <select id="progSel" onChange="setSelectedProgIdx()"></select>
   <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()" />
-  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 01.04.2021</span></div>
+  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 01.12.2021</span></div>
 </body>
 </html>
