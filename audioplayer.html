@@ -124,9 +124,9 @@ var progArr = [
   {desc: "≈ American Roots", src: "https://cast1.torontocast.com:2305/stream",
     dbid: "AmRoots", stationId: 283449},
   {desc: "≈ Cajun Music Radio", src: "https://26383.live.streamtheworld.com/SAM07AAC007.aac",
-    dbid: "CajunMR", wStation: 74303},  // http://15913.live.streamtheworld.com/SAM07AAC007_SC
-  {desc: "≈ Radio Louisiana", src: "http://radio3.citrus3.com:8416/;"},  // http://91.121.134.23:8416/stream/1/?cb=219651.mp3
-  {desc: "≈ Jazz Ascona", src: "https://streaming.smartradio.ch:9505/stream"},
+    dbid: "CajunMR", X_wStation: 74303},  // http://15913.live.streamtheworld.com/SAM07AAC007_SC
+  {desc: "≈ Rádio de Cabo Verde", src: "https://rcvonline.ddns.net/proxy/rtc_rcv/stream"},
+  {desc: "≈ Radio Cabo Verde International", src: "http://41.221.203.141:8093/stream"},
   {desc: "≈ Vallenato Internacional", src: "http://server7.servistreaming.com:10010/stream"},
   {desc: "≈ NRK Alltid Nyheter", src: "http://lyd.nrk.no:80/nrk_radio_alltid_nyheter_mp3_h"},
   {desc: "≈ NRK Jazz", src: "http://lyd.nrk.no/nrk_radio_jazz_mp3_m"},
@@ -202,6 +202,9 @@ function init() {
     opt.text = progArr[i].desc;
     progSel.appendChild(opt);
   }
+
+  progIdx = localStorage.getItem("prog_idx") || 0;
+  progSel.value = progIdx;
   
   audioElem.addEventListener("error", handleError);
 }
@@ -241,6 +244,7 @@ function loadSource() {
     startStopBtn.disabled = false;
     curStationId = curProg.stationId;
     curWStation = curProg.wStation;
+    localStorage.setItem("prog_idx", progIdx);
     var info = songInfoAvail() ? "song info" : "◆";
     if (curProg.startTime) {
       try {
@@ -376,6 +380,6 @@ function listTunes() {
   </div>
   <select id="progSel" onChange="setSelectedProgIdx()"></select>
   <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()" />
-  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 04.02.2024</span></div>
+  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 08.08.2024</span></div>
 </body>
 </html>
