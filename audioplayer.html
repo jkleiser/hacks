@@ -8,7 +8,7 @@
   <style>
 body {
   margin: 8px 4px;
-  background-color: #eed;
+  background-color: #ddc;
 }
 div.audio {
   display: inline-block;
@@ -118,12 +118,12 @@ var curStationId = null;  // tunein
 var curWStation = null; // widgets
 
 var progArr = [
-  {desc: "≈ KRVS, Louisiana", src: "https://26733.live.streamtheworld.com/KRVSFMAAC.aac"},
+  {desc: "≈ KRVS, Louisiana", src: "https://18863.live.streamtheworld.com/KRVSFMAAC.aac"},
   {desc: "≈ WWNO, Louisiana", src: "http://tektite.streamguys1.com:5140/wwnolive-mp3"},
   {desc: "≈ WWOZ, Louisiana", src: "https://wwoz-sc.streamguys1.com/wwoz-hi.mp3"},
   {desc: "≈ American Roots", src: "https://cast1.torontocast.com:2305/stream",
     dbid: "AmRoots", stationId: 283449},
-  {desc: "≈ Cajun Music Radio", src: "https://26383.live.streamtheworld.com/SAM07AAC007.aac",
+  {desc: "≈ Cajun Music Radio", src: "https://26343.live.streamtheworld.com/SAM07AAC007.aac",
     dbid: "CajunMR", X_wStation: 74303},  // http://15913.live.streamtheworld.com/SAM07AAC007_SC
   {desc: "≈ Rádio de Cabo Verde", src: "https://rcvonline.ddns.net/proxy/rtc_rcv/stream"},
   {desc: "≈ Radio Cabo Verde International", src: "http://41.221.203.141:8093/stream"},
@@ -380,6 +380,6 @@ function listTunes() {
   </div>
   <select id="progSel" onChange="setSelectedProgIdx()"></select>
   <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()" />
-  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 08.08.2024</span></div>
+  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 02.09.2024</span></div>
 </body>
 </html>
