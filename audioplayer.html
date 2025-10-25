@@ -3,18 +3,17 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta charset="utf-8" />
-  <link rel="shortcut icon" href="./frog.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./radio.png" type="image/x-icon">
   <title>Audio Player 🍁</title>
   <style>
 body {
-  margin: 8px 4px;
+  margin: 8px;
   background-color: #ddc;
 }
 div.audio {
   display: inline-block;
   vertical-align: middle;
   border: 1px solid #bba;
-  width: 296px;
   resize: horizontal;
   overflow: hidden;
   padding: 0 12px 0 0;
@@ -28,7 +27,6 @@ audio {
 div.custom {
   margin: 8px 0;
   border: 1px solid #bba;
-  width: 296px;
   padding: 6px;
 }
 button {
@@ -61,7 +59,6 @@ div#infoElem {
   margin: 8px 0;
   border: 1px solid #bba;
   font: 18px Verdana, Arial, sans-serif;
-  width: 296px;
   height: 213px;
   padding: 4px 6px;
   overflow: hidden;
@@ -79,6 +76,10 @@ div#infoElem span {
 select#progSel, option, #loadSrcBtn {
   background-color: white;
   font-size: 14px;
+}
+div, div#infoElem {
+  width: 100%;
+  max-width: 376px;
 }
 
 @media all and (max-width: 600px) {
@@ -128,6 +129,7 @@ var progArr = [
   {desc: "≈ Rádio de Cabo Verde", src: "https://rcvonline.ddns.net/proxy/rtc_rcv/stream"},
   {desc: "≈ Radio Cabo Verde International", src: "http://41.221.203.141:8093/stream"},
   {desc: "≈ Vallenato Internacional", src: "http://server7.servistreaming.com:10010/stream"},
+  {desc: "≈ BBC World Service", src: "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"},
   {desc: "≈ NRK Alltid Nyheter", src: "http://lyd.nrk.no:80/nrk_radio_alltid_nyheter_mp3_h"},
   {desc: "≈ NRK Jazz", src: "http://lyd.nrk.no/nrk_radio_jazz_mp3_m"},
   {desc: "≈ NRK Klassisk", src: "http://lyd.nrk.no/nrk_radio_klassisk_mp3_m"},
@@ -380,6 +382,6 @@ function listTunes() {
   </div>
   <select id="progSel" onChange="setSelectedProgIdx()"></select>
   <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()" />
-  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 02.09.2024</span></div>
+  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 25.10.2025</span></div>
 </body>
 </html>
