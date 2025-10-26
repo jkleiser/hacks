@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
   <link rel="shortcut icon" href="./radio.png" type="image/x-icon">
   <title>Audio Player 🍁</title>
   <style>
@@ -47,7 +47,7 @@ button.pause {
 }
 input#timeElem, input#progNameElem, div#infoElem {
   margin: 6px 0;
-  font: 15px Verdana, Arial, sans-serif;
+  font: 18px Verdana, Arial, sans-serif;
   width: 3.5em;
   padding: 0.3em 0.5em;
   background-color: #ffe;
@@ -58,7 +58,6 @@ input#progNameElem {
 div#infoElem {
   margin: 8px 0;
   border: 1px solid #bba;
-  font: 18px Verdana, Arial, sans-serif;
   height: 213px;
   padding: 4px 6px;
   overflow: hidden;
@@ -75,7 +74,13 @@ div#infoElem span {
 }
 select#progSel, option, #loadSrcBtn {
   background-color: white;
-  font-size: 14px;
+  font-size: 16px;
+}
+select#progSel {
+  padding: 4px;
+}
+#loadSrcBtn {
+  padding: 4px 8px;
 }
 div, div#infoElem {
   width: 100%;
@@ -363,7 +368,7 @@ function listTunes() {
     var tune=tuneArr[i].split("|");
     list += p(tune[0] + ": " + tune[1]);
   }
-  adjustInfoElem("14px", "white");
+  adjustInfoElem("16px", "white");
   infoElem.innerHTML = list;
 }
   </script>
@@ -377,11 +382,11 @@ function listTunes() {
   </div>
   <div class="custom">
     <button id="startStopBtn" class="play" onClick="startStop()"></button>
-    <input type="text" id="timeElem" readonly="" />
-    <input type="text" id="progNameElem" readonly="" onClick="listTunes()" />
+    <input type="text" id="timeElem" readonly="">
+    <input type="text" id="progNameElem" readonly="" onClick="listTunes()">
   </div>
   <select id="progSel" onChange="setSelectedProgIdx()"></select>
-  <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()" />
-  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 25.10.2025</span></div>
+  <input id="loadSrcBtn" type="button" value="Load" onClick="loadSource()">
+  <div id="infoElem" onClick="getTuneJsonp()"><span style="font-size: 10px">Updated 26.10.2025</span></div>
 </body>
 </html>
